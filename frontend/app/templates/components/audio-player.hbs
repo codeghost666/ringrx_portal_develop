@@ -1,0 +1,13 @@
+<section data-type="slider-group">
+  <div class="audio-controller" data-total={{hifi.duration}}>
+    <i class="audion-btn" title="Play" {{action 'toggle'}}>
+      <i class="zmdi zmdi-play {{if hifi.isPlaying 'hidden'}}"></i>
+      <i class="zmdi zmdi-pause {{if hifi.isPlaying '' 'hidden'}}"></i>
+    </i>
+    <div class="audioplayer-time audioplayer-time-current">{{audio-time hifi.position}}</div>
+    {{input type="range" class="range" id=sliderId value=hifi.position min=0 max=hifi.duration step=1000}}
+
+    <div class="audioplayer-time audioplayer-time-duration">
+      {{if hifi.duration (audio-time hifi.duration) '...'}}</div>
+  </div>
+</section>

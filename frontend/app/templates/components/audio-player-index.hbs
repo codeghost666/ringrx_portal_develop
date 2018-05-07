@@ -1,0 +1,17 @@
+<section data-type="slider-group">
+  {{#if playSound.isIdle}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <div class="audio-controller {{divClass}}" data-total={{changeset.currentSound.duration}}>
+    <i class="audion-btn" title="Play" {{action 'toggle'}}>
+      <i class="zmdi zmdi-play {{if changeset.currentSound.isPlaying 'hidden'}}"></i>
+      <i class="zmdi zmdi-pause {{if changeset.currentSound.isPlaying '' 'hidden'}}"></i>
+    </i>
+    <div class="audioplayer-time audioplayer-time-current">{{audio-time changeset.currentSound.position}}</div>
+    {{input type="range" class="range" id=sliderId value=changeset.currentSound.position min=0 max=changeset.currentSound.duration step=1000}}
+
+    <div class="audioplayer-time audioplayer-time-duration">
+      {{if changeset.currentSound.duration (audio-time changeset.currentSound.duration) '...'}}</div>
+  </div>
+</section>

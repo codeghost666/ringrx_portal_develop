@@ -1,0 +1,21 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Name</span>
+  {{device.name}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Device Type</span>
+  {{device.deviceType}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">MAC Address</span>
+  {{device-macaddress device.macaddress}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">User</span>
+  {{userFormatted}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Display Name</span>
+  {{device.displayName}}
+</td>
+
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.devices.edit' device class='edit'}}
+  <span class="link" onclick={{perform deleteDevice}}> Remove</span>
+</td>

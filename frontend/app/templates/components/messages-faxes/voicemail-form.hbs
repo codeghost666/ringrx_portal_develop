@@ -1,0 +1,43 @@
+<div class="modal-body">
+  {{#if save.isIdle}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <div class="inner">
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-5 col-xs-12">
+        <div class="row">
+          <div class="col-md-4 col-sm-4"><label>From #:</label></div>
+          <div class="col-md-8 col-sm-8">
+            {{call-number-pretty-format message.caller}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-4"><label>Received:</label></div>
+          <div class="col-md-8 col-sm-8">
+            {{messages-faxes-data message.createdAt}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7 col-sm-7 col-xs-12">
+        {{audio-player-index play=(route-action 'playMediaFile') changeset=message}}
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-2 col-sm-12 col-xs-12 short-area"><label for="comments"> Transcription: </label></div>
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <p>{{message.transcription}}</p>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-2 col-sm-12 col-xs-12 short-area"><label for="comments"> Notes: </label></div>
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        {{textarea value=message.notes name="notes" placeholder="Add note here" cols="30" rows="5"}}
+      </div>
+    </div>
+  </div>
+<div class="modal-footer form-footer">
+  <button class="base-btn" type="submit" onclick={{perform save}}>Save updates</button>
+  <a href="#"{{action 'rollback'}}>Cancel</a>
+</div>
+</div>

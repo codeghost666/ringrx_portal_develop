@@ -1,0 +1,46 @@
+  <div class="col-md-5 col-sm-4 col-xs-12"><label>User/Priority:</label></div>
+  <div class="col-md-4 col-sm-4 col-xs-7">
+    {{#rl-dropdown-container
+      class=(if ShowPbxUserIdError "dropdown customer-select error" "dropdown customer-select")}}
+      {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true"}}
+        {{object-value user.pbxUserId pbxUserProperties}} <span
+        class="caret"></span>
+      {{/rl-dropdown-toggle}}
+      {{#if ShowPbxUserIdError}}
+        <div class="error-box">
+          {{v-get user 'pbxUserId' 'message'}}
+        </div>
+      {{/if}}
+      {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                     closeOnChildClick="a:link"}}
+        {{#each pbxUserOptions as |option|}}
+          <li><a href="#" {{action "setPropertie" 'pbxUserId' option.key}}>{{option.value}}</a></li>
+        {{/each}}
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+  </div>
+  <div class="col-md-2 col-sm-2 col-xs-3">
+    {{#rl-dropdown-container
+      class=(if ShowPriorityError "dropdown customer-select error" "dropdown customer-select")}}
+      {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true"}}
+        {{object-value user.priority pbxPriorityProperties}} <span
+        class="caret"></span>
+      {{/rl-dropdown-toggle}}
+      {{#if ShowPriorityError}}
+        <div class="error-box">
+          {{v-get user 'priority' 'message'}}
+        </div>
+      {{/if}}
+      {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                     closeOnChildClick="a:link"}}
+        {{#each-in pbxPriorityProperties as |key value|}}
+          <li><a href="#" {{action "setPropertie" 'priority' key}}>{{value}}</a></li>
+        {{/each-in}}
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+  </div>
+  <div class="col-md-1 col-sm-2 col-xs-2">
+    <i class="zmdi zmdi-delete" onclick={{perform deleteUser}}></i>
+  </div>

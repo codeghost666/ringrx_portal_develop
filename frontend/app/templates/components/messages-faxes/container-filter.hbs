@@ -1,0 +1,61 @@
+<!-- Tools Bar -->
+<div class="tools-bar row hidden-xs">
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+    {{#rl-dropdown-container class="dropdown customer-select"}}
+      {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true"}}
+        {{if allType 'All Message Types' (capitalize-text messageType)}} <span class="caret"></span>
+      {{/rl-dropdown-toggle}}
+      {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1" closeOnChildClick="a:link"}}
+        <li><a href="#" {{action "setSelection" ""}}>All Message Types</a></li>
+        <li><a href="#" {{action "setSelection" "voicemail"}}>Voicemail</a></li>
+        <li><a href="#" {{action "setSelection" "oncall"}}>Oncall</a></li>
+        <li><a href="#" {{action "setSelection" "fax"}}>Fax</a></li>
+        <li><a href="#" {{action "setSelection" "message"}}>Message</a></li>
+      {{/rl-dropdown}}
+    {{/rl-dropdown-container}}
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6 push-l0">
+    <div class="input-daterange">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item">
+        <span class="text">From:</span>
+        {{bootstrap-datepicker value=startDateToJSDate endDate=endDateToJSDate autoclose=true
+                               class="form-control" }}
+        <span class="lnr lnr-calendar-full"></span>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item last">
+        <span class="text">To:</span>
+        {{bootstrap-datepicker value=endDateToJSDate startDate=startDateToJSDate autoclose=true
+                               class="form-control"}}
+        <span class="lnr lnr-calendar-full"></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-10 push-l0">
+    <div class="search-form">
+      <div class="form-group">
+        {{ input value=query class="search" type="search" placeholder="Search"}}
+        <div class="search-btn" ><i class="ion-ios-search"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+    <div class="search-form">
+      <div class="form-group">
+        {{#rl-dropdown-container class="dropdown customer-select"}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle"  data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            {{paginateBy}} <span class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick="a:link"}}
+            {{#each-in paginationProperty as |key value|}}
+              <li><a href="#" {{action "setProperty" 'paginateBy' key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{yield filteredContent paginateBy}}

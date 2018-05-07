@@ -1,0 +1,105 @@
+<!-- Overlay-->
+<div class="overlay"></div>
+<div class="mobile-left-menu">
+  <div class="left-sidebar">
+    <div class="clearfix">
+      <div class="col-xs-12">
+        <div class="left-mobile-menu-close" {{ action 'mobileLeftMenuClose' }}>
+          <i class="zmdi zmdi-sort-amount-desc"></i></div>
+      </div>
+    </div>
+    <ul class="menu-list">
+      {{#link-to 'dashboard' tagName='li' click=(action 'mobileLeftMenuClose')}}
+        {{link-to 'DASHBOARD' 'dashboard' }}
+      {{/link-to}}
+
+      {{#link-to 'messages-faxes' tagName='li' click=(action 'mobileLeftMenuClose')}}
+        {{link-to (message-count newMessagesCount) 'messages-faxes' elementId='messages-faxes' }}
+      {{/link-to}}
+
+      {{#link-to 'calls' tagName='li' click=(action 'mobileLeftMenuClose')}}
+        {{link-to 'CALLS' 'calls'  }}
+      {{/link-to}}
+
+      {{#link-to 'on-calls' tagName='li' click=(action 'mobileLeftMenuClose') }}
+        {{link-to 'ON CALL' 'on-calls'  }}
+      {{/link-to}}
+
+      {{#link-to 'contacts' tagName='li' click=(action 'mobileLeftMenuClose')}}
+        {{link-to 'CONTACTS' 'contacts' }}
+      {{/link-to}}
+
+      {{#link-to 'my-phone' tagName='li' click=(action 'mobileLeftMenuClose')}}
+        {{link-to 'MY PHONE' 'my-phone'}}
+      {{/link-to}}
+    </ul>
+  </div>
+</div>
+<!-- Header -->
+<div class="header">
+  <div class="container">
+    <div class="row">
+      <!--Menu Button-->
+      <div class="menu-btn" {{ action 'mobileLeftMenuOpen' }}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="col-md-1 col-sm-12 col-xs-12">
+        <a class="logo" href="#"><img src="/img/logo.png" alt="RingRx"></a>
+      </div>
+      <div class="col-md-8 col-sm-2 col-xs-4">
+        <ul class="nav navbar-nav pull-left hidden-sm hidden-xs">
+          {{#link-to 'dashboard' tagName='li' }}
+            {{link-to 'DASHBOARD' 'dashboard' }}
+          {{/link-to}}
+
+          {{#link-to 'messages-faxes' tagName='li' href='false'}}
+            {{link-to (message-count newMessagesCount) 'messages-faxes' elementId='messages-faxes-mobile'}}
+          {{/link-to}}
+
+          {{#link-to 'calls' tagName='li' }}
+            {{link-to 'CALLS' 'calls' data-toggle="modal" data-target="#add-yacht" }}
+          {{/link-to}}
+
+          {{#link-to 'on-calls' tagName='li' }}
+            {{link-to 'ON CALL' 'on-calls' data-toggle="modal" data-target="#add-yacht" }}
+          {{/link-to}}
+
+          {{#link-to 'contacts' tagName='li' }}
+            {{link-to 'CONTACTS' 'contacts' data-toggle="modal" data-target="#add-yacht" }}
+          {{/link-to}}
+
+          {{#link-to 'my-phone' tagName='li'}}
+            {{link-to 'MY PHONE' 'my-phone' data-toggle="modal" data-target="#add-yacht" }}
+          {{/link-to}}
+        </ul>
+      </div>
+      <div class="col-md-2 col-sm-2 col-xs-4 pull-right">
+        <!--Account Block-->
+        {{#rl-dropdown-container class="pull-right dropdown"}}
+          <div class="account-block">
+            {{rl-dropdown-toggle tagName= "i" id="dLabel" class="fa fa-cog" aria-hidden="true" data-toggle="dropdown"}}
+            {{#rl-dropdown tagrailsName="ul" class="dropdown-menu" aria-labelledby="dLabel" closeOnChildClick="a:link"}}
+             {{#if (await guardService.isAdmin)}}
+               <li class="hide-settings">{{link-to 'Settings' 'settings.index'}}</li>
+               <li class="show-links">{{link-to 'Locations' 'settings.locations.index'}}</li>
+               <li class="show-links">{{link-to 'Phone Numbers' 'settings.phone-numbers.index'}}</li>
+               <li class="show-links">{{link-to 'Users' 'settings.users.index'}}</li>
+               <li class="show-links">{{link-to 'Devices' 'settings.devices.index'}}</li>
+               <li class="show-links">{{link-to 'Mailbox' 'settings.mailboxes.index'}}</li>
+               <li class="show-links">{{link-to 'Faxes' 'settings.faxes.index'}}</li>
+               <li class="show-links">{{link-to 'Groups' 'settings.groups.index'}}</li>
+               <li class="show-links">{{link-to 'Parking Lots' 'settings.parking-lots.index'}}</li>
+               <li class="show-links">{{link-to 'Media Files' 'settings.media-files.index'}}</li>
+               <li class="show-links">{{link-to 'Audit logs' 'settings.audit-logs'}}</li>
+             {{/if}}
+              <li><a href="#" {{action 'logout'}}>Logout</a></li>
+            {{/rl-dropdown}}
+          </div>
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+  </div>
+</div>
+

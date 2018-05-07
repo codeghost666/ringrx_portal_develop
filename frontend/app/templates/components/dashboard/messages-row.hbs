@@ -1,0 +1,7 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Date</span> <span
+  class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+  class="ion-ios-arrow-down"></i></span> <i class={{iconClass}}></i> {{messages-faxes-data message.createdAt}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Caller #</span>{{call-number-pretty-format message.caller}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Type</span> {{capitalize-text
+  message.messageType}}</td>

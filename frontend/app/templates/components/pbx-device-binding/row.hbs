@@ -1,0 +1,139 @@
+<div class="accordion-header open" {{action 'headerClick'}}>{{headerName}}<i class="zmdi zmdi-chevron-down pull-right"></i></div>
+<div class="accordion-collapse-block">
+  <div class="row form-row">
+    <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding Type:</label></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      {{#rl-dropdown-container
+        class=(if ShowBindingTypeError "dropdown customer-select error" "dropdown customer-select")}}
+        {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="true"}}
+          {{object-value item.bindingType bindingTypeProperties}} <span
+          class="caret"></span>
+        {{/rl-dropdown-toggle}}
+        {{#if ShowBindingTypeError}}
+          <div class="error-box">
+            {{v-get item 'bindingType' 'message'}}
+          </div>
+        {{/if}}
+        {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                       closeOnChildClick="a:link"}}
+          {{#each-in bindingTypeProperties as |key value|}}
+            <li><a href="#" {{action "setPropertie" 'bindingType' key}}>{{value}}</a></li>
+          {{/each-in}}
+        {{/rl-dropdown}}
+      {{/rl-dropdown-container}}
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding Behavior:</label></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      {{#rl-dropdown-container
+        class=(if ShowBindingBehaviorError "dropdown customer-select error" "dropdown customer-select")}}
+        {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="true"}}
+          {{object-value item.bindingBehavior bindingBehaviorProperties}} <span
+          class="caret"></span>
+        {{/rl-dropdown-toggle}}
+        {{#if ShowBindingBehaviorError}}
+          <div class="error-box">
+            {{v-get item 'bindingBehavior' 'message'}}
+          </div>
+        {{/if}}
+        {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                       closeOnChildClick="a:link"}}
+          {{#each-in bindingBehaviorProperties as |key value|}}
+            <li><a href="#" {{action "setPropertie" 'bindingBehavior' key}}>{{value}}</a></li>
+          {{/each-in}}
+        {{/rl-dropdown}}
+      {{/rl-dropdown-container}}
+    </div>
+  </div>
+
+  <div class="row form-row {{if showDisplayError 'error'}}">
+    <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding Display:</label></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      {{one-way-input-mask item.bindingDisplay mask=nameMask name="bindingDisplay"
+                           update=(action (mut item.bindingDisplay))
+                           onblur=(action (mut ShowDisplayValidation) true)}}
+      {{#if showDisplayError}}
+        <div class="error-box">
+          {{v-get item 'bindingDisplay' 'message'}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="row form-row {{if showArgumentError 'error'}}">
+    <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding Argument:</label></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      {{one-way-input-mask item.bindingArgument mask=nameMask name="bindingDisplay"
+                           update=(action (mut item.bindingArgument))
+                           onblur=(action (mut ShowArgumentValidation) true)}}
+      {{#if showArgumentError}}
+        <div class="error-box">
+          {{v-get item 'bindingArgument' 'message'}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="row form-row">
+    <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding User:</label></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      {{#rl-dropdown-container
+        class=(if ShowUserError "dropdown customer-select error" "dropdown customer-select")}}
+        {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="true"}}
+          {{object-value item.pbxUserId usersProperties}} <span
+          class="caret"></span>
+        {{/rl-dropdown-toggle}}
+        {{#if ShowUserError}}
+          <div class="error-box">
+            {{v-get item 'pbxUserId' 'message'}}
+          </div>
+        {{/if}}
+        {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                       closeOnChildClick="a:link"}}
+          {{#each-in usersProperties as |key value|}}
+            <li><a href="#" {{action "setPropertie" 'pbxUserId' key}}>{{value}}</a></li>
+          {{/each-in}}
+        {{/rl-dropdown}}
+      {{/rl-dropdown-container}}
+    </div>
+  </div>
+
+  {{#if showBindingParkingLot}}
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Binding Parking Lot:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{#rl-dropdown-container
+          class=(if ShowParkibgLotError "dropdown customer-select error" "dropdown customer-select")}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            {{object-value item.pbxParkingLotId parkingLotProperties}} <span
+            class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#if ShowParkibgLotError}}
+            <div class="error-box">
+              {{v-get item 'pbxParkingLotId' 'message'}}
+            </div>
+          {{/if}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                         closeOnChildClick="a:link"}}
+            {{#each-in parkingLotProperties as |key value|}}
+              <li><a href="#" {{action "setPropertie" 'pbxParkingLotId' key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="row form-row">
+    <div class="col-md-5 col-sm-4 col-xs-12"></div>
+    <div class="col-md-7 col-sm-8 col-xs-12">
+      <i class="zmdi zmdi-delete" onclick={{perform deleteDeviceBinding}}></i>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+{{#if showContacts.isIdle}}
+
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="main-content">
+  <div class="container">
+    {{link-to 'Back to All Messages' 'messages-faxes.index' class="back-link"}}
+    <div class="base-block block-new-fax">
+      <div>
+        <div class="inner">
+          <div class="base-block-title">
+            Create New Fax
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-1 col-xs-12 short-area"><label>To:</label></div>
+            <div class="col-md-3 col-sm-5 col-xs-12 max-width-195">
+              <button
+                class="base-btn btn-light modal-btn" onclick={{perform showContacts}}><i
+                class="zmdi zmdi-accounts-outline"></i> Select Contact(s)
+              </button>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12 short-area text-center"><label for="first-name">Or</label></div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="row {{if isShowFaxError 'error'}}">
+                <div class="col-md-6 col-xs-12">
+                  {{one-way-input-mask newContact.fax mask="(999)-999-9999" name="fax" id="fax"
+                                       placeholder="(___)-___-____"
+                                       update=(action (mut newContact.fax))}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-1 hidden-xs short-area"> &nbsp;</div>
+            <div class="col-md-3 col-sm-5 col-xs-12 max-width-195">
+              <label class="inbtn">
+                {{input type="checkbox" checked=isIncludeCoverPage}}
+                <span class="inbtn__indicator"></span>
+                &nbsp; Include cover page?
+              </label>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-12 short-area"> &nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="row {{if isShowNameError 'error'}}">
+                <div class="col-md-6">
+                  {{input type='text' value=newContact.firstName name="first-name" id="first-name"
+                          placeholder="First Name"}}
+                </div>
+                <div class="col-md-6 push-sm-t12">
+                  {{input type='text' value=newContact.lastName name="last-name" id="last-name"
+                          placeholder="Last Name"}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-1 hidden-xs short-area">&nbsp;</div>
+            <div class="col-md-8 col-sm-7 hidden-xs max-width-195">&nbsp;</div>
+            <div class="col-md-1 col-sm-1 hidden-xs short-area">&nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="row">
+                <div class="col-md-12">
+                  {{input type='text' value=newContact.company name="company" id="company" placeholder="Company"}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-1 hidden-xs short-area">&nbsp;</div>
+            <div class="col-md-8 col-sm-7 hidden-xs max-width-195">&nbsp;</div>
+            <div class="col-md-1 col-sm-1 hidden-xs short-area">&nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="inbtn"> Save Contact? &nbsp;
+                    {{input type="checkbox" checked=isSaveContact}}
+                    <span class="inbtn__indicator"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br> <br class="hidden-xs">
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-12 col-xs-12 short-area"><label for="subject"> Recipients: </label></div>
+            <div class="col-md-11 col-sm-12 col-xs-12">
+              {{input type='text' value=recipients name="recipients" placeholder="Recipients" disabled=true}}
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-12 col-xs-12 short-area"><label for="subject"> Subject: </label></div>
+            <div class="col-md-11 col-sm-12 col-xs-12">
+              {{input type='text' value=subject name="subject" id="subject" placeholder="Subject"   }}
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-12 col-xs-12 short-area"><label for="comments"> Comments: </label></div>
+            <div class="col-md-11 col-sm-12 col-xs-12">
+              {{textarea value=comment name="comments" id="comments" cols="30" rows="5"}}
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-1 col-sm-12 hidden-xs short-area">&nbsp;</div>
+            <div class="col-md-11 col-sm-12 col-xs-12">
+              <p class="middle-color-text">Attach document <span class="light-text">(max 1MB)</span></p>
+              <div class="upload">
+                <input type='file' id='file-field' accept="image/tiff,application/pdf" multiple='false' onchange={{action
+                  'setFaxFile'}}/>
+                <span class="upload-btn">Browse</span>
+                {{if faxFile faxFile.name}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform sendFax}}>Send</button>
+          {{link-to 'Cancel' 'messages-faxes.index'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#if isShowingModal}}
+  {{#ember-wormhole to='modal-dialog-wormhole'}}
+    {{#modal-dialog modalTitle='Select Contact(s)' isShowingModal = isShowingModal as |isShowingModal|}}
+      <div class="modal-body">
+        {{#list-pagination items = contacts paginateBy = 10 as |paginatedItems page numberOfPages| }}
+          <thead>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Contact</td>
+            <td>Fax Number</td>
+            <td>Phone Number</td>
+            <td>Company</td>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each paginatedItems as |item|}}
+            {{messages-faxes/contact-row contact = item }}
+          {{/each}}
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="5">
+              <!-- Pagination -->
+              {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                 aria-label="Page navigation"
+                                 class="navigation"}}
+            </td>
+          </tr>
+          </tfoot>
+        {{/list-pagination}}
+        {{#if isNoContacts}}
+          <p class="no-data-message">No Data</p>
+        {{/if}}
+      </div>
+      <div class="modal-footer form-footer">
+        <button class="base-btn" type="submit" {{action 'closeModal'}}>Submit</button>
+        <a href="#" {{action 'cancelModal'}}>Cancel</a>
+      </div>
+    {{/modal-dialog}}
+  {{/ember-wormhole}}
+{{/if}}

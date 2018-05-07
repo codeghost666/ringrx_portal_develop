@@ -1,0 +1,14 @@
+<div class="main-wrapper">
+
+  {{#if session.isAuthenticated}}
+    {{page-header getNewMessagesCount=(route-action 'getNewMessagesCount')}}
+  {{else}}
+    {{page-login-header}}
+  {{/if}}
+  {{notification-container zindex='2000' position="top" elementId='page-notification-container'}}
+  {{outlet}}
+</div>
+
+
+
+

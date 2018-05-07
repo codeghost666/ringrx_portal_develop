@@ -1,0 +1,113 @@
+{{#if saveButtonClick.isIdle}}
+  {{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if changeset.error.name 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.name mask=nameMask name="name" id="name"
+                                 update=(action (mut changeset.name))
+                                 onblur=(action 'validateProperty' changeset 'name')}}
+            <div class="error-box">
+              {{changeset.error.name.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.mailbox 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="email-notification"> Email notification to: </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.mailbox name="mailbox" id="mailbox"
+                                 update=(action (mut changeset.mailbox))
+                                 onblur=(action 'validateProperty' changeset 'mailbox')}}
+            <div class="error-box">
+              {{changeset.error.mailbox.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.pin 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="pin">PIN: </label></div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            {{one-way-input-mask changeset.pin mask="9{4,9}" name="pin" id="pin" class="input-middle"
+                                 update=(action (mut changeset.pin))
+                                 onblur=(action 'validateProperty' changeset 'pin')}}
+            <div class="error-box">
+              {{if changeset.error.pin 'Pin must be between 4 and 9 digits'}}
+            </div>
+          </div>
+        </div>
+        {{#if haveGreeting}}
+          <div class="row form-row">
+            <div class="col-md-5 col-sm-4 col-xs-12"><label> Play greeting: </label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12">
+              {{audio-player-index play=(route-action 'playGreeting') changeset=model }}
+            </div>
+          </div>
+        {{/if}}
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 hidden-xs"><label> Greeting: </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="upload">
+              {{#file-upload name="greeting" accept="audio/mp3,audio/wav" multiple='false'
+                             onfileadd=(action 'setGreeting')}}
+                <span class="upload-btn">Upload new</span>
+              {{/file-upload}}
+              {{if changeset.greeting changeset.greeting.name}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.emailContent 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="email-message"> Email message to: </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.emailContent name="email-message" id="email-message"
+                                 update=(action (mut changeset.emailContent))
+                                 onblur=(action 'validateProperty' changeset 'emailContent')}}
+            <div class="error-box">
+              {{changeset.error.emailContent.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.emailNotification 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="email-notification"> Email notification to: </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.emailNotification name="email-notification" id="email-notification"
+                                 update=(action (mut changeset.emailNotification))
+                                 onblur=(action 'validateProperty' changeset 'emailNotification')}}
+            <div class="error-box">
+              {{changeset.error.emailNotification.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="mail-box-name">Transcription:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12"><label class="inbtn">
+            {{input type="checkbox" checked=changeset.transcription}}
+            <span class="inbtn__indicator"></span>
+          </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label for="mail-box-name">Play envelope:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12"><label class="inbtn">
+            {{input type="checkbox"  checked=changeset.playEnvelope}}
+            <span class="inbtn__indicator"></span>
+          </label>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button>
+          <a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

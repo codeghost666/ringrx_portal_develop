@@ -1,0 +1,127 @@
+{{#if isCopyMode}}
+  <div class="overlay"></div>
+  <!-- Copy Mode Window -->
+  <div class="copy-mode arrow_box">
+    <div class="title hidden-xs">Copying mode</div>
+    <div class="inner">
+      <p class="hidden-xs">Click dates on the calendar to copy the selected/highlighted shift to.</p>
+      <button class="base-btn btn-dark" {{action 'StopCopy'}}>Done pasting shifts</button>
+    </div>
+  </div>
+{{/if}}
+
+<div class="main-content" id="calendar">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title">Calendar</div>
+        <div class="settings-row">
+          {{#rl-dropdown-container
+            class="dropdown customer-select"}}
+            {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                  aria-haspopup="true" aria-expanded="true"}}
+              <em>{{oncall.name}}</em> <span
+              class="caret"></span>
+            {{/rl-dropdown-toggle}}
+            {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                           closeOnChildClick="a:link"}}
+              {{#each-in oncallProperties as |key value|}}
+                <li><a href="#" {{action "setProperty" 'oncallId' key}}>{{value}}</a></li>
+              {{/each-in}}
+            {{/rl-dropdown}}
+          {{/rl-dropdown-container}}
+          {{link-to 'Call Settings' 'my-phone.on-call-settings' class="base-btn btn-light"}}
+          <a class="base-btn btn-light" href="#" {{action 'showManageDepartments'}}>Manage Departments</a>
+          <a class="base-btn btn-light" href="#" {{action 'showManageRepeated'}}>Manage Repeated Shifts</a>
+          <div class="btn-group hidden-sm hidden-xs calendar-view-btn">
+            <button type="button" data-toggle="list-view" class="btn base-btn btn-light" {{action 'listView'}}><i
+              class="lnr lnr-list"></i></button>
+            <button type="button" data-toggle="month-view" class="btn base-btn btn-light active"{{action
+              'calendarView'}}><i class="lnr lnr-calendar-full"></i></button>
+          </div>
+        </div>
+        {{#print-this options=printThisOptions printSelector=".base-block.calendar" as |doPrint|}}
+          <div class="base-block calendar">
+            <!-- Month View -->
+            <div class="view month-view hidden-sm hidden-xs">
+              <div class="btn-group">
+                <button type="button" class="btn base-btn btn-light" {{action 'previousMonth'}}><i
+                  class="zmdi zmdi-chevron-left"></i></button>
+                <button type="button" class="btn base-btn btn-light" {{action 'nextMonth'}}><i
+                  class="zmdi zmdi-chevron-right"></i></button>
+              </div>
+              <span class="title">{{current-month currentMonth}}</span>
+            </div>
+            <!-- List View -->
+            <div class="view list-view hidden">
+              <div class="input-daterange">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item">
+                  <span class="text">From:</span>
+                  {{bootstrap-datepicker value=startDateToJSDate endDate=endDateToJSDate autoclose=true
+                                         class="form-control" }}
+                  <span class="lnr lnr-calendar-full"></span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item last">
+                  <span class="text">To:</span>
+                  {{bootstrap-datepicker value=endDateToJSDate startDate=startDateToJSDate autoclose=true
+                                         class="form-control"}}
+                  <span class="lnr lnr-calendar-full"></span>
+                </div>
+              </div>
+            </div>
+            <div class="link-row pull-right">
+              <a href="#" onclick={{doPrint}}>Print</a> &nbsp;&nbsp;&nbsp;
+              <a class="icon" href="#">
+                <i data-toggle="tooltip" data-placement="left" data-original-title="Tooltip on left"
+                   class="zmdi zmdi-info-outline tooltip"></i>
+              </a>
+              <a class="icon" href="#"><i data-toggle="tooltip" data-placement="left"
+                                          data-original-title="Tooltip on left"
+                                          class="zmdi zmdi-help-outline tooltip"></i></a>
+            </div>
+            <div class="clearfix"></div>
+            {{on-call/calendar-table monthTable = fixedLastShiftsTimeMonthTable userProperties=userProperties
+                                     isCopyMode=isCopyMode
+                                     showEditContainer=(action 'showEditDialog')}}
+          </div>
+        {{/print-this}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#if isEditDayDialog}}
+  {{on-call/day-shift-container shifts=shifts userProperties=userProperties currentDate=currentDate
+                                closeDialog=(action 'closeDayDialog')
+                                rollbackChanges=(route-action 'rollbackChanges')
+                                addOneTimeShift = (route-action 'addOneTimeShift')
+                                saveShifts=(route-action 'saveShifts')
+                                deleteRecord=(route-action 'deleteRecord')
+                                updatePriority=(route-action 'updatePriority')
+                                copyMode=(action 'copyMode')
+                                moveShiftOnTop=(route-action 'moveShiftOnTop')}}
+{{/if}}
+
+{{#if isEditRepeatDialog}}
+  {{on-call/repeated-shift-container shifts=pbxOncallShiftsArray userProperties=userProperties
+                                     closeDialog=(action 'closeRepeatedDialog')
+                                     rollbackChanges=(route-action 'rollbackChanges')
+                                     addRepeatedShift = (route-action 'addRepeatedShift')
+                                     saveShifts=(route-action 'saveShifts')
+                                     deleteRecord=(route-action 'deleteRecord')
+                                     updatePriority=(route-action 'updatePriority')
+                                     moveShiftOnTop=(route-action 'moveShiftOnTop')}}
+
+{{/if}}
+
+{{#if isManageDepartments}}
+  {{on-call/manage-departments model=model userProperties=userProperties
+                               getNewOncall=(route-action 'getNewOncall')
+                               closeDialog=(action 'closeManageDepartmentsDialog')
+                               rollbackChanges=(route-action 'rollbackDepartmentChanges')
+                               getMoh=(route-action 'getMoh')
+                               getMediafiles=(route-action 'getMediafiles')
+                               getMailboxes=(route-action 'getMailboxes')
+                               getPhonenumbers=(route-action 'getPhonenumbers')}}
+
+{{/if}}

@@ -1,0 +1,16 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Created At</span>
+  {{call-date record.createdAt}} {{call-time record.createdAt}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Username</span>
+  {{record.username}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">IP Address</span>
+  {{record.ipaddress}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Role</span>
+  {{record.role}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Event</span>
+  {{record.event}}
+</td>

@@ -1,0 +1,10 @@
+{
+  "name": "frontend",
+  "dependencies": {
+    "jquery-ui": "1.11.4",
+    "moment": "^2.20.1",
+    "bootstrap-datepicker": "^1.7.1",
+    "qrcode": "^1.0.2",
+    "bootstrap": "~3.3.4"
+  }
+}

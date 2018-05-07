@@ -1,0 +1,26 @@
+# common ignores
+**/*.log
+**/.git
+**/.ssh
+**/.cache
+**/bin/
+**/obj/
+*.userprefs
+**/*.userprefs
+*.rpm
+*.unit
+*.bat
+README.md
+sql.bootstrap
+
+# build stuff
+TestResult.xml
+docker-compose.yml
+codefresh.yml
+Dockerfile
+tests.unit
+README.md
+docker.*.sh
+proj.txt
+
+env.*.sh

@@ -1,0 +1,119 @@
+<div class="overlay"></div>
+<!-- Left Menu -->
+
+<div class="overlay"></div>
+<div class="mobile-left-menu">
+  <div class="left-sidebar">
+    <div class="clearfix">
+      <div class="col-xs-12">
+        <div class="left-mobile-menu-close" {{ action 'mobileLeftMenuClose' }}>
+          <i class="zmdi zmdi-sort-amount-desc"></i></div>
+      </div>
+    </div>
+    <ul class="menu-list">
+      <li><a href="https://ringrx.com/">Home</a></li>
+      <li><a href="https://ringrx.com/">Features</a></li>
+      <li><a href="https://ringrx.com/pricing/">Pricing</a></li>
+      <li><a href="https://ringrx.com/about-us/">About us</a></li>
+      <li><a href="https://ringrx.com/free-trial">Free trial</a></li>
+      <li><a href="https://ringrx.com/contact/">Contact us</a><br><br></li>
+      {{#link-to 'login' tagName='li' href='false'}}
+        {{link-to 'Login' 'login'}}
+      {{/link-to}}
+      <li class="phone-box"><a class="link" href="#"><i class="zmdi zmdi-phone-in-talk"></i>  1-888-980-6860</a></li>
+    </ul>
+  </div>
+</div>
+<!-- Header -->
+<div class="header">
+  <div class="container">
+    <div class="row">
+      <!--Menu Button-->
+      <div class="menu-btn" {{ action 'mobileLeftMenuOpen' }}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="col-md-1 col-sm-12 col-xs-12">
+        <a class="logo" href="#"><img src="/img/logo.png" alt="RingRx"></a>
+      </div>
+      <div class="col-md-9 col-sm-12 col-xs-12">
+        <ul class="nav navbar-nav pull-left hidden-sm hidden-xs">
+          <li><a href="https://ringrx.com/">Home</a></li>
+          <li><a href="https://ringrx.com/">Features</a></li>
+          <li><a href="https://ringrx.com/pricing/">Pricing</a></li>
+          <li><a href="https://ringrx.com/about-us/">About us</a></li>
+          <li><a href="https://ringrx.com/free-trial">Free trial</a></li>
+          <li><a href="https://ringrx.com/contact/">Contact us</a></li>
+          {{#link-to 'login' tagName='li' href='false'}}
+            {{link-to 'Login' 'login'}}
+          {{/link-to}}
+          <li class="phone-box"><a class="link" href="tel:+18889806860"><i class="zmdi zmdi-phone-in-talk"></i>  1-888-980-6860</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!--<div class="mobile-left-menu">
+  <div class="left-sidebar">
+    <div class="clearfix">
+      <div class="col-xs-12">
+        <div class="left-mobile-menu-close" {{ action 'mobileLeftMenuClose' }}><i class="zmdi zmdi-sort-amount-desc"></i></div>
+      </div>
+    </div>
+    <ul class="menu-list">
+      <li><a href="https://ringrx.com/">Features</a></li>
+      <li><a href="#">Benefits</a></li>
+      <li><a href="https://ringrx.com/pricing/">Pricing</a></li>
+      <li><a href="https://ringrx.com/faq/">How it works</a></li>
+      <li><a href="https://ringrx.com/about-us/">About</a></li>
+      <li><a href="https://ringrx.com/contact/">Contact</a><br><br></li>
+      {{#link-to 'login'}}
+        <span class="base-btn btn-light">Sign In</span>
+      {{/link-to}}
+      <li><a href="https://ringrx.com/free-trial"><span class="base-btn btn-light-blue">Try it free!</span></a></li>
+    </ul>
+  </div>
+</div>
+<!-- Header -->
+<div class="header header-sign_in">
+  <div class="container">
+    <div class="row">
+      <!--Menu Button-->
+      <div  class="menu-btn" {{ action 'mobileLeftMenuOpen' }}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <a class="logo" href="#">
+          <img class="hidden-xs" src="/img/logo_1.png" alt="RingR">
+          <img class="hidden-lg hidden-md hidden-sm" src="/img/logo_mobile.png" alt="RingRx">
+        </a>
+      </div>
+      <div class="col-md-9 col-sm-2 col-xs-4">
+        <ul class="nav navbar-nav pull-left hidden-sm hidden-xs">
+          <li><a href="https://ringrx.com/">Features</a></li>
+          <li><a href="#">Benefits</a></li>
+          <li><a href="https://ringrx.com/pricing/">Pricing</a></li>
+          <li><a href="https://ringrx.com/faq/">How it works</a></li>
+          <li><a href="https://ringrx.com/about-us/">About</a></li>
+          <li><a href="https://ringrx.com/contact/">Contact</a></li>
+          <li class="phone-box"><a class="link" href="#"><i class="zmdi zmdi-phone-in-talk"></i>  1-888-980-6860</a></li>
+          <li class="btn-box">
+            {{#link-to 'login'}}
+              <span class="base-btn btn-light">Sign In</span>
+            {{/link-to}}
+          </li>
+          <li class="btn-box">
+            <a href="https://ringrx.com/free-trial"><span class="base-btn btn-blue">Try it free!</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-9 hidden-lg hidden-md text-right">
+        <a class="link mobile-phone" href="#"><i class="zmdi zmdi-phone-in-talk"></i>  1-888-980-6860</a>
+      </div>
+    </div>
+  </div>
+</div>--}}

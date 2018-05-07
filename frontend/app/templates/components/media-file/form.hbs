@@ -1,0 +1,51 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if changeset.error.name 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.name mask=nameMask name="name" id="name"
+                                 update=(action (mut changeset.name))
+                                 onblur=(action 'validateProperty' changeset 'name')}}
+            <div class="error-box">
+              {{changeset.error.name.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label> Media File: </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{audio-player-index play=(route-action 'playMediaFile') changeset=model}}
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 hidden-xs"><label> &nbsp; </label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="upload">
+
+              <input type='file' id='file-field' accept="audio/mp3,audio/wav" multiple='false' onchange={{action
+                'setMediaFile'}}/>
+              <span class="upload-btn">Upload new</span>
+              {{if changeset.mediafile changeset.mediafile.name}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

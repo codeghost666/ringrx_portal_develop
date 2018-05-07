@@ -1,0 +1,160 @@
+{{#if editShift}}
+  <td colspan="4">
+    {{#if (and deleteRecord.isIdle saveRecord.isIdle)}}
+    {{else}}
+      {{ember-spinner config='standard'}}
+    {{/if}}
+    <div class="base-form">
+      <div class="inner">
+        <div class="row {{if showNameError 'error'}}">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Department name:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{one-way-input-mask department.name mask=nameMask name="name"
+                                 update=(action (mut department.name))
+                                 onblur=(action (mut ShowNameValidation) true)}}
+            {{#if showNameError}}
+              <div class="error-box">
+                {{v-get department 'name' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row {{if ShowMinutesError 'error'}}">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Minutes:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{one-way-input-mask department.minutes mask='9{1,3}' name="minutes"
+                                 update=(action (mut department.minutes))
+                                 onblur=(action (mut ShowMinutesValidation) true)}}
+            {{#if ShowMinutesError}}
+              <div class="error-box">
+                {{v-get department 'minutes' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row {{if ShowRetriesError 'error'}}">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Retries:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{one-way-input-mask department.retries mask='9{1,3}' name="retries"
+                                 update=(action (mut department.retries))
+                                 onblur=(action (mut ShowRetriesValidation) true)}}
+            {{#if ShowRetriesError}}
+              <div class="error-box">
+                {{v-get department 'retries' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row {{if ShowshiftAlarmMinutesError 'error'}}">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Shift alarm minutes:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{one-way-input-mask department.shiftAlarmMinutes mask='9{1,3}' name="shiftAlarmMinutes"
+                                 update=(action (mut department.shiftAlarmMinutes))
+                                 onblur=(action (mut ShowShiftAlarmMinutesValidation) true)}}
+            {{#if ShowshiftAlarmMinutesError}}
+              <div class="error-box">
+                {{v-get department 'shiftAlarmMinutes' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Caller:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowCalleridError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{number-pretty-format (object-value department.callerid phonenumberProperties)}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowCalleridError}}
+                <div class="error-box">
+                  {{v-get department 'callerid' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in phonenumberProperties as |key value|}}
+                  <li><a href="#" {{action "setProperty" 'callerid' key}}>{{number-pretty-format value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Music on hold:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowMohError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value department.moh mohProperties}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowMohError}}
+                <div class="error-box">
+                  {{v-get department 'moh' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in mohProperties as |key value|}}
+                  <li><a href="#" {{action "setProperty" 'moh' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12"><label>Mailbox:</label></div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowMailboxError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value department.mailbox mailboxProperties}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowMailboxError}}
+                <div class="error-box">
+                  {{v-get department 'mailbox' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in mailboxProperties as |key value|}}
+                  <li><a href="#" {{action "setProperty" 'mailbox' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveRecord}}>Save</button>
+          <a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </td>
+{{else}}
+  <td>
+    <span class="mobile-title hidden-lg hidden-md hidden-sm"> Department Name</span> {{department.name}}
+  </td>
+  <td><span class="mobile-title hidden-lg hidden-md hidden-sm">Retry Attempts </span>{{department.retries}}</td>
+  <td><span class="mobile-title hidden-lg hidden-md hidden-sm">Minutes per retry</span>{{department.minutes}}</td>
+  <td class="action">
+    {{#if deleteRecord.isIdle}}
+    {{else}}
+      {{ember-spinner config='standard'}}
+    {{/if}}
+    <i class="zmdi zmdi-edit"{{action 'editDepartment'}}></i> <i class="zmdi zmdi-delete" onclick={{perform
+    deleteRecord}}></i>
+  </td>
+{{/if}}

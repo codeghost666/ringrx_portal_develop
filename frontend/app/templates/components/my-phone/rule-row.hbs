@@ -1,0 +1,21 @@
+<td class="sh-td">
+  <span class="mobile-title hidden-lg hidden-md hidden-sm">Days</span>
+  <div class="schedule-line">
+    <span class="day-item {{if rule.daySun 'active' ''}}">Sun</span>
+    <span class="day-item {{if rule.dayMon 'active' ''}}">Mon</span>
+    <span class="day-item {{if rule.dayTue 'active' ''}}">Tue</span>
+    <span class="day-item {{if rule.dayWed 'active' ''}}">Wed</span>
+    <span class="day-item {{if rule.dayThu 'active' ''}}">Thu</span>
+    <span class="day-item {{if rule.dayFri 'active' ''}}">Fri</span>
+    <span class="day-item {{if rule.daySat 'active' ''}}">Sat</span>
+  </div>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Time Period</span> {{startTime}} - {{endTime}}</td>
+<td class="multi-content"><span class="mobile-title hidden-lg hidden-md hidden-sm">Call Handling </span>{{object-value
+  rule.oncallBehavior oncallProperties}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Method</span>{{object-value rule.forwardBehavior
+                                                                                         forwardProperties}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span> <i data-target="#profileModal"
+                                                                              class="zmdi zmdi-edit modal-btn"
+  {{action 'editRule'}}></i> <i
+  class="zmdi zmdi-delete" onclick={{perform deleteRecord}}></i></td>

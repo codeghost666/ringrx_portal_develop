@@ -1,0 +1,21 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Location name</span>
+  {{location.name}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Address</span>
+  {{location.address}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">City</span>
+  {{location.city}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">State</span>
+  {{location.state}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Zip</span>
+  {{location.zip}}
+</td>
+
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.locations.edit' location class='edit'}}<span class="link" onclick={{perform
+    deleteLocation}}> Remove</span>
+</td>

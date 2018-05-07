@@ -1,0 +1,86 @@
+<div class="main-content">
+  <div class="container">
+    <a href="#" {{action 'rollback'}} class="back-link">Back to All Contacts</a>
+    <div class="base-block block-new-contact">
+      {{#if saveButtonClick.isIdle}}
+      {{else}}
+        {{ember-spinner config='standard'}}
+      {{/if}}
+      <div action="#" method="post">
+        <div class="inner">
+          <div class="base-block-title">
+            <span>{{formTitle}}</span>
+          </div>
+          <div class="row form-row {{if item.showFirstNameAlert 'error'}}">
+            <div class="col-md-4 col-sm-5 col-xs-12"><label for="first-name">First Name:</label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{input type='text' value=item.firstName name="first-name" id="first-name" placeholder="First Name"   }}
+              <div class="error-box">
+                {{if item.showFirstNameAlert 'First name must be a valid first name '}}
+              </div>
+            </div>
+          </div>
+          <div class="row form-row {{if item.showLastNameAlert 'error'}}">
+            <div class="col-md-4 col-sm-5 hidden-xs"><label for="last-name">Last Name: </label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{input type='text' value=item.lastName name="last-name" id="last-name" placeholder="Last Name"}}
+              <div class="error-box">
+                {{if item.showLastNameAlert 'Last name must be a valid last name '}}
+              </div>
+            </div>
+          </div>
+          <div class="row form-row {{if item.showCompanyAlert 'error'}}">
+            <div class="col-md-4 col-sm-5 col-xs-12"><label for="last-name"> Company: </label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{input type='text' value=item.org name="company" id="company" placeholder="Company"   }}
+              <div class="error-box">
+                {{if item.showCompanyAlert 'Company must be a valid company name '}}
+              </div>
+            </div>
+          </div>
+          <div class="row form-row {{if item.fax.showTelephoneAlert 'error'}}">
+            <div class="col-md-4 col-sm-5 col-xs-12"><label for="last-name"> Fax: </label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{one-way-input-mask fax mask="(999)-999-9999" name="fax" id="fax" placeholder="(___)-___-____"
+                                   update=(action (mut fax))}}
+              <div class="error-box">
+                {{if item.fax.showTelephoneAlert 'Number must be a valid number of 10 digits '}}
+              </div>
+            </div>
+          </div>
+          <div class="row form-row {{if item.phone.showTelephoneAlert 'error'}}">
+            <div class="col-md-4 col-sm-5 col-xs-12"><label for="last-name"> Phone: </label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{one-way-input-mask phone mask="(999)-999-9999" name="phone" id="phone" placeholder="(___)-___-____"
+                                   update=(action (mut phone))}}
+              <div class="error-box">
+                {{if item.phone.showTelephoneAlert 'Number must be a valid number of 10 digits '}}
+              </div>
+            </div>
+          </div>
+          <div class="row form-row">
+            <div class="col-md-4 col-sm-5 col-xs-12"><label for="last-name"> Contact Type: </label></div>
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              {{#rl-dropdown-container class="dropdown customer-select"}}
+                {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu1"
+                                      data-toggle="dropdown"
+                                      aria-haspopup="true" aria-expanded="true"}}
+                  {{item.contactType}} <span class="caret"></span>
+                {{/rl-dropdown-toggle}}
+                {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                               closeOnChildClick="a:link"}}
+                  <li><a href="#" {{action "setSelection" "private"}}>Private</a></li>
+                  <li><a href="#" {{action "setSelection" "group"}}>Group</a></li>
+                {{/rl-dropdown}}
+              {{/rl-dropdown-container}}
+            </div>
+          </div>
+        </div>
+        <div class="form-footer text-right">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button>
+          <a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

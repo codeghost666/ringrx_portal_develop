@@ -1,0 +1,19 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Contact</span> {{contact-name-pretty-format contact.name}}
+  <span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span></td>
+<td class="td-collapse"><span
+  class="mobile-title hidden-lg hidden-md hidden-sm"></span><span>{{call-number-pretty-format
+  contact.fax.number}}</span>
+</td>
+<td class="td-collapse"><span
+  class="mobile-title hidden-lg hidden-md hidden-sm"></span><span>{{call-number-pretty-format
+  contact.phone.number}}</span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Company</span> {{contact-name-pretty-format contact.org}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Contact Type</span> {{contact.contactType}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'contacts.edit' contact class='edit'}}<span class="link" onclick={{perform
+    deleteContact}}> Remove</span>
+</td>

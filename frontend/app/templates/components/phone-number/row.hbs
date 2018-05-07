@@ -1,0 +1,22 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Phone Number</span><span
+  class="link">{{call-number-pretty-format phone.phonenumber}}</span><span
+  class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+  class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Distinctive Ring</span>
+  {{object-value phone.distinctiveRing distinctiveRingProperties}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">CNAM Prefix</span>
+  {{property-pretty-format phone.cnamPrefix 12}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Extension</span>
+  {{extensionFormatted}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">PBX Location</span>
+  {{object-value phone.pbxLocationId PbxLocationProperties}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Forward Destination</span><span
+    class="link">{{call-number-pretty-format phone.forwardDestination}}</span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit' 'settings.phone-numbers.edit' phone class='edit' class='edit'}}
+</td>

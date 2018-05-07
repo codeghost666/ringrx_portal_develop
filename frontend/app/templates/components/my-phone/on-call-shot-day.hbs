@@ -1,0 +1,14 @@
+<div class="item-coll-title">{{dayIndex}}</div>
+{{#if noRules}}
+  <div class="coll-row">
+    <span class="text">No one rule</span>
+  </div>
+{{else}}
+  {{#each rules as |rule index|}}
+    <div class="coll-row">
+      <span class="time">{{to-twenty-hour-format rule.start}} - {{to-twenty-hour-format
+        rule.end}}</span>
+      <span class="name">{{property-pretty-format rule.oncallBehavior}}<br>{{property-pretty-format rule.forwardBehavior}}</span>
+    </div>
+  {{/each}}
+{{/if}}

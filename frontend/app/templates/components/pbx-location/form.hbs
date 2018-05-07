@@ -1,0 +1,76 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if changeset.error.name 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Location name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.name mask=nameMask name="name" id="name"
+                                 update=(action (mut changeset.name))
+                                 onblur=(action 'validateProperty' changeset 'name')}}
+            <div class="error-box">
+              {{changeset.error.name.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.address 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Address:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.address mask=addressMask name="address" id="address"
+                                 update=(action (mut changeset.address))
+                                 onblur=(action 'validateProperty' changeset 'address')}}
+            <div class="error-box">
+              {{changeset.error.address.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.city 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>City:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.city mask=nameMask name="city" id="city"
+                                 update=(action (mut changeset.city))
+                                 onblur=(action 'validateProperty' changeset 'city')}}
+            <div class="error-box">
+              {{changeset.error.city.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.state 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>State:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.state mask=nameMask name="state" id="state"
+                                 update=(action (mut changeset.state))
+                                 onblur=(action 'validateProperty' changeset 'state')}}
+            <div class="error-box">
+              {{changeset.error.state.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.zip 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Zip:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.zip mask=zipMask name="zip" id="zip"
+                                 update=(action (mut changeset.zip))
+                                 onblur=(action 'validateProperty' changeset 'zip')}}
+            <div class="error-box">
+              {{changeset.error.zip.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

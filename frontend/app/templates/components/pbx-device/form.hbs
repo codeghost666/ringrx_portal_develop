@@ -1,0 +1,160 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if showNameError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Device name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask model.name mask=nameMask name="name" id="name"
+                                 update=(action (mut model.name))
+                                 onblur=(action (mut ShowNameValidation) true)}}
+            {{#if showNameError}}
+              <div class="error-box">
+                {{v-get model 'name' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Device Type:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowDeviceTypeError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                {{object-value model.deviceType deviceTypeProperties}} <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowDeviceTypeError}}
+                <div class="error-box">
+                  {{v-get model 'deviceType' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in deviceTypeProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'deviceType' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Signaling:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowSignalingError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                {{object-value model.signaling signalingProperties}} <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowDeviceTypeError}}
+                <div class="error-box">
+                  {{v-get model 'signaling' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in signalingProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'signaling' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row form-row {{if ShowMacaddressError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>MAC address:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask model.macaddress mask=macAddressMask name="macaddress" id="macaddress"
+                                 update=(action (mut model.macaddress))
+                                 onblur=(action (mut ShowMacaddressValidation) true)}}
+            {{#if ShowMacaddressError}}
+              <div class="error-box">
+                {{v-get model 'macaddress' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>User:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowUserError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                {{object-value model.pbxUserId usersProperties}} <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowUserError}}
+                <div class="error-box">
+                  {{v-get model 'pbxUserId' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in usersProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'pbxUserId' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row form-row {{if ShowDisplayNameError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Display name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask model.displayName mask=nameMask name="displayName" id="displayName"
+                                 update=(action (mut model.displayName))
+                                 onblur=(action (mut ShowDisplayNameValidation) true)}}
+            {{#if ShowDisplayNameError}}
+              <div class="error-box">
+                {{v-get model 'displayName' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Device Bindings:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <span class="link" onclick={{perform AddDeviceBinding}}> Add Device Binding</span>
+          </div>
+        </div>
+          {{#sortable-objects sortableObjectList=orderedDeviceBindings overrideClass='accordion' enableSort=true}}
+            {{#each orderedDeviceBindings as |deviceBinding|}}
+              {{#draggable-object content=deviceBinding overrideClass='sortable-objects' isSortable=true}}
+                {{pbx-device-binding/row item=deviceBinding
+                                         showValidations=showValidations
+                                         bindingTypeProperties = bindingTypeProperties
+                                         bindingBehaviorProperties=bindingBehaviorProperties
+                                         usersProperties=usersProperties
+                                         parkingLotProperties=parkingLotProperties
+                                         deleteRecord=(route-action 'deleteDeviceBinding')}}
+              {{/draggable-object}}
+            {{/each}}
+            <br>
+          {{/sortable-objects}}
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button>
+          <a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

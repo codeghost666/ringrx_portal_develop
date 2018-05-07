@@ -1,0 +1,99 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title">Calls</div>
+      </div>
+    </div>
+    {{#filter-content content=orderModel
+                      properties="callerIdNumber callerIdName calledParty" as |filteredIngredients query|}}
+      <div class="row tools-bar">
+        <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+          <div class="input-daterange">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item">
+              <span class="text">From:</span>
+              {{bootstrap-datepicker value=startDateToJSDate endDate=endDateToJSDate autoclose=true
+                                     class="form-control" }}
+              <span class="lnr lnr-calendar-full"></span>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 daterange-item last">
+              <span class="text">To:</span>
+              {{bootstrap-datepicker value=endDateToJSDate startDate=startDateToJSDate autoclose=true
+                                     class="form-control"}}
+              <span class="lnr lnr-calendar-full"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right hidden-sm hidden-xs">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+              <div class="search-form">
+                <div class="form-group">
+                  {{ input value=query class="search" type="search" placeholder="Search"}}
+                  <div class="search-btn" ><i class="ion-ios-search"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              <div class="search-form">
+                <div class="form-group">
+                  {{#rl-dropdown-container class="dropdown customer-select"}}
+                    {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle"  data-toggle="dropdown"
+                                          aria-haspopup="true" aria-expanded="true"}}
+                      {{paginateBy}} <span class="caret"></span>
+                    {{/rl-dropdown-toggle}}
+                    {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick="a:link"}}
+                      {{#each-in paginationProperty as |key value|}}
+                        <li><a href="#" {{action "setProperty" 'paginateBy' key}}>{{value}}</a></li>
+                      {{/each-in}}
+                    {{/rl-dropdown}}
+                  {{/rl-dropdown-container}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{#list-pagination items=filteredIngredients paginateBy = paginateBy as |paginatedItems page numberOfPages| }}
+        <thead>
+        <tr>
+          <td>Date</td>
+          <td>Time</td>
+          <td>Calling #</td>
+          <td>Caller Name</td>
+          <td>Called #</td>
+          <td>Duration</td>
+          <td>Hangup Cause</td>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each paginatedItems as |item|}}
+          {{call-row call = item}}
+        {{/each}}
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="7">
+            <!-- Pagination -->
+            {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1 aria-label="Page navigation"
+                               class="navigation"}}
+          </td>
+        </tr>
+        </tfoot>
+      {{/list-pagination}}
+      <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 text-right hidden-sm hidden-xs">
+
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <div class="link-row pull-right">
+            <a href="#" {{action 'getCSV' filteredIngredients}}>Download CSV</a>
+          </div>
+        </div>
+      </div>
+    {{/filter-content}}
+  </div>
+</div>

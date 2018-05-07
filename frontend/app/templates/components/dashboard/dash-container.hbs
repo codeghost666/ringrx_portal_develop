@@ -1,0 +1,76 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title">Dashboard</div>
+      </div>
+
+      <div class="col-md-12 col-xs-12">
+        <div class="base-block dashboard sameblock">
+          <div class="base-block-title">Messages {{link-to 'Show all' 'messages-faxes' class="pull-right link"}}</div>
+          <!-- Contacts Table -->
+          {{#list-pagination items = messages paginateBy = 10 as |paginatedItems page numberOfPages| }}
+            <thead>
+            <tr>
+              <td>Date</td>
+              <td>Caller #</td>
+              <td>Type</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each paginatedItems as |item|}}
+              {{dashboard/messages-row message = item}}
+            {{/each}}
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="6">
+                <!-- Pagination -->
+                {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                   aria-label="Page navigation"
+                                   class="navigation"}}
+              </td>
+            </tr>
+            </tfoot>
+          {{/list-pagination}}
+        </div>
+      </div>
+
+      {{dashboard/oncall-shot oncallId=oncallId oncalls=model.oncalls}}
+      <div class="col-xs-12">
+        <div class="base-block dashboard sameblock">
+          <div class="base-block-title">Calls {{link-to 'Show all' 'calls' class="pull-right link"}}</div>
+          <!-- Contacts Table -->
+
+          {{#list-pagination items=model.calls paginateBy = 10 as |paginatedItems page numberOfPages| }}
+            <thead>
+            <tr>
+              <td>Date</td>
+              <td>Time</td>
+              <td>Calling #</td>
+              <td>Caller Name</td>
+              <td>Called #</td>
+              <td>Duration</td>
+              <td>Hangup Cause</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each paginatedItems as |item|}}
+              {{call-row call = item}}
+            {{/each}}
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="7">
+                <!-- Pagination -->
+                {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1 aria-label="Page navigation"
+                                   class="navigation"}}
+              </td>
+            </tr>
+            </tfoot>
+          {{/list-pagination}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

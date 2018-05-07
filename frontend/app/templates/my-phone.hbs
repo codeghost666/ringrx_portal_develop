@@ -1,0 +1,18 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title">Settings </div>
+      </div>
+    </div>
+    <div class="base-block tabs-block">
+      {{#bs-nav type="tabs" as |nav|}}
+        {{#nav.item}}{{#nav.link-to "my-phone.index"}}Phone Settings{{/nav.link-to}}{{/nav.item}}
+        {{#nav.item}}{{#nav.link-to "my-phone.on-call-settings"}}On Call Settings{{/nav.link-to}}{{/nav.item}}
+      {{/bs-nav}}
+      <div class="tab-content">
+      {{outlet}}
+      </div>
+    </div>
+  </div>
+</div>

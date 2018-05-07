@@ -1,0 +1,12 @@
+#calendar.calendar
+  %h2#month
+    //= h Date.parse(@month.to_s + '-1-' + @year.to_s).strftime("%B %Y")
+    = calendar_for schedules, year: @year.year, month: @month.month  do |calendar|
+      = calendar.head('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
+        - calendar.day(day_method: :start_time, id: '%Y-%m-%d') do |date, schedules|
+        = date.day
+        %ul
+          - for schedule in schedules
+            - unless schedule.pbx_oncall_shift_users.first.nil?          
+              %li
+                %strong= schedule.pbx_oncall_shift_users.first.pbx_user.name                

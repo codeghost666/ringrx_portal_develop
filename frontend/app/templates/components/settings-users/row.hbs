@@ -1,0 +1,14 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Phone Number</span>
+  {{user.email}}
+</td>
+
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Extension</span>
+  {{user.extension}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">PBX Location</span>
+  {{user.username}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.users.edit' user class='edit'}}<span class="link" onclick={{perform
+    deleteUser}}> Remove</span>
+</td>

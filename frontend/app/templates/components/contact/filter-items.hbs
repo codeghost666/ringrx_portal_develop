@@ -1,0 +1,77 @@
+<!-- Tools Bar -->
+<div class="row tools-bar">
+  <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+    {{link-to 'Create New Contact +' 'contacts.new' class="base-btn" }}
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-right">
+        {{#rl-dropdown-container class="dropdown customer-select"}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            {{if allType 'All Contact Types' contactType}} <span class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1" closeOnChildClick="a:link"}}
+            <li><a href="#" {{action "setSelection" ""}}>All Contact Types</a></li>
+            <li><a href="#" {{action "setSelection" "private"}}>Private</a></li>
+            <li><a href="#" {{action "setSelection" "group"}}>Group</a></li>
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+        <div class="search-form">
+          <div class="form-group">
+            {{ input value=query class="search" type="search" placeholder="Search"}}
+            <div class="search-btn" ><i class="ion-ios-search"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="search-form">
+          <div class="form-group">
+            {{#rl-dropdown-container class="dropdown customer-select"}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle"  data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                {{paginateBy}} <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick="a:link"}}
+                {{#each-in paginationProperty as |key value|}}
+                  <li><a href="#" {{action "setProperty" 'paginateBy' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#list-pagination items = filteredContent paginateBy = paginateBy as |paginatedItems page numberOfPages| }}
+  <thead>
+  <tr>
+    <td>Contact</td>
+    <td>Fax Number</td>
+    <td>Phone Number</td>
+    <td>Company</td>
+    <td>Contact Type</td>
+    <td>Action</td>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each paginatedItems as |item|}}
+    {{contact/contact-row contact = item deleteRecord=(route-action 'deleteRecord')}}
+  {{/each}}
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="5">
+      <!-- Pagination -->
+      {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1 aria-label="Page navigation"
+                         class="navigation"}}
+    </td>
+  </tr>
+  </tfoot>
+{{/list-pagination}}
+

@@ -1,0 +1,145 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title">Mailbox
+          {{#link-to 'messages-faxes.new-fax' data-toggle="modal-container" data-target="#newContact"
+                     class="base-btn not-bold pull-right"}}
+            <i class="zmdi zmdi-mail-send"></i> &nbsp;Send a Fax
+          {{/link-to}}
+        </div>
+      </div>
+    </div>
+    <div class="base-block tabs-block">
+      <!-- Nav tabs -->
+      {{#bs-tab customTabs=true as |tab|}}
+        {{#bs-nav type="tabs" as |nav|}}
+          {{#nav.item active=(bs-eq tab.activeId "inbox")}}
+            <a href="#inbox" class="nav-link" role="tab" {{action tab.select "inbox"}}>Inbox</a>
+          {{/nav.item}}
+          {{#nav.item active=(bs-eq tab.activeId "sent") classNames='hidden-xs'}}
+            <a href="#sent" class="nav-link" role="tab" {{action tab.select "sent"}}>Sent</a>
+          {{/nav.item}}
+          {{#nav.item active=(bs-eq tab.activeId "trash")}}
+            <a href="#trash" class="nav-link" role="tab" {{action tab.select "trash"}}>Trash</a>
+          {{/nav.item}}
+          {{#nav.item active=(bs-eq tab.activeId "settings") classNames='hidden-xs'}}
+            <a href="#settings" class="nav-link" role="tab" {{action tab.select "settings"}}>My Voicemail Settings</a>
+          {{/nav.item}}
+        {{/bs-nav}}
+
+        <div class="tab-content">
+          {{#tab.pane elementId="inbox" title="Inbox"}}
+            {{#messages-faxes/container-filter items=model.voicemail messageFolder='inbox' properties="caller"
+                                               messageType=messageTypeInbox startDate=startDateInbox
+                                               endDate=endDateInbox as |filteredContent query|}}
+
+              {{#list-pagination items = filteredContent paginateBy = 10 as |paginatedItems page numberOfPages| }}
+                <thead>
+                <tr>
+                  <td>From #</td>
+                  <td>Received</td>
+                  <td>Type</td>
+                  <td>Actions</td>
+                  <td>History</td>
+                  <td>&nbsp;</td>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each paginatedItems as |item|}}
+                  {{messages-faxes/inbox-row message = item updateMessage=(route-action 'updateMessage')
+                                             getVoiceMail=(route-action 'getVoiceMail')}}
+                {{/each}}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td colspan="6">
+                    <!-- Pagination -->
+                    {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                       aria-label="Page navigation"
+                                       class="navigation"}}
+                  </td>
+                </tr>
+                </tfoot>
+              {{/list-pagination}}
+
+            {{/messages-faxes/container-filter}}
+
+          {{/tab.pane}}
+          {{#tab.pane elementId="sent" title="Sent"}}
+            {{#messages-faxes/container-filter items=model.voicemail messageFolder='sent' properties="caller"
+                                               messageType=messageTypeSent
+                                               startDate=startDateSent endDate=endDateSent as |filteredContent query|}}
+
+              {{#list-pagination items = filteredContent paginateBy = 10 as |paginatedItems page numberOfPages| }}
+                <thead>
+                <tr>
+                  <td>Sent To #</td>
+                  <td>Sent on</td>
+                  <td>Type</td>
+                  <td>Actions</td>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each paginatedItems as |item|}}
+                  {{messages-faxes/sent-row message = item updateMessage=(route-action 'updateMessage')}}
+                {{/each}}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td colspan="4">
+                    <!-- Pagination -->
+                    {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                       aria-label="Page navigation"
+                                       class="navigation"}}
+                  </td>
+                </tr>
+                </tfoot>
+              {{/list-pagination}}
+
+            {{/messages-faxes/container-filter}}
+          {{/tab.pane}}
+          {{#tab.pane elementId="trash" title="Trash"}}
+            {{#messages-faxes/container-filter items=model.voicemail messageFolder='trash' properties="caller"
+                                               messageType=messageTypeTrash
+                                               startDate=startDateTrash
+                                               endDate=endDateTrash as |filteredContent query|}}
+              {{#list-pagination items = filteredContent paginateBy = 10 as |paginatedItems page numberOfPages| }}
+                <thead>
+                <tr>
+                  <td>Sender #</td>
+                  <td>Received</td>
+                  <td>Type</td>
+                  <td>Actions</td>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each paginatedItems as |item|}}
+                  {{messages-faxes/trash-row message = item updateMessage=(route-action 'updateMessage')}}
+                {{/each}}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td colspan="4">
+                    <!-- Pagination -->
+                    {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                       aria-label="Page navigation"
+                                       class="navigation"}}
+                  </td>
+                </tr>
+                </tfoot>
+              {{/list-pagination}}
+
+            {{/messages-faxes/container-filter}}
+          {{/tab.pane}}
+          {{#tab.pane elementId="settings" title="My Voicemail Settings"}}
+            {{messages-faxes/my-voicemail-settings changeset=(changeset model.mailbox.firstObject MailboxValidations)
+                                                   save=(route-action "updateMailbox") model=model.mailbox.firstObject
+                                                   rollback=(route-action "rollbackMailbox")}}
+
+          {{/tab.pane}}
+        </div>
+      {{/bs-tab}}
+    </div>
+  </div>
+</div>

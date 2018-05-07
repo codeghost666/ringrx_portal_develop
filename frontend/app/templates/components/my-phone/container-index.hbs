@@ -1,0 +1,220 @@
+{{#if statusSpinner}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="base-form">
+  <div class="inner">
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Name:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <p>{{changeset.name}}</p>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Extension:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <p>{{changeset.extension}}</p>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>User name:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <p>{{changeset.username}}</p>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Password:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <button class="base-btn btn-light" {{action 'changePassword'}}>Change</button>
+      </div>
+    </div>
+    {{#if isShowingChangePassword}}
+      {{#ember-wormhole to='modal-dialog-wormhole'}}
+        {{#modal-dialog modalTitle='Change Password' elementId='changePassword'
+                        isShowingModal = isShowingChangePassword as |isShowingModal|}}
+          {{my-phone/change-password isShowingModal=isShowingModal
+                                     updatePassword=(route-action 'updatePassword')}}
+        {{/modal-dialog}}
+      {{/ember-wormhole}}
+    {{/if}}
+    <div class="row form-row {{if changeset.error.pin 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Pin:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-input-mask changeset.pin mask="9{4,9}" name="pin" id="pin" class="input-middle"
+                             update=(action (mut changeset.pin))
+                             onblur=(action 'validateProperty' changeset 'pin')}}
+        <div class="error-box">
+          {{changeset.error.pin.validation}}
+        </div>
+      </div>
+    </div>
+    {{#if changeset.externalCalleridName }}
+      <div class="row form-row">
+        <div class="col-md-5 col-sm-4 col-xs-12"><label>External Caller ID Name:</label></div>
+        <div class="col-md-7 col-sm-8 col-xs-12">
+          <p>{{changeset.externalCalleridName}}</p>
+        </div>
+      </div>
+    {{/if}}
+    {{#if changeset.externalCalleridNumber}}
+      <div class="row form-row">
+        <div class="col-md-5 col-sm-4 col-xs-12"><label>External Caller ID Number:</label></div>
+        <div class="col-md-7 col-sm-8 col-xs-12">
+          <p>{{changeset.externalCalleridNumber}}</p>
+        </div>
+      </div>
+    {{/if}}
+    <div class="row form-row {{if changeset.error.email 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Email:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-email-mask changeset.email name="email" id="email"
+                             update=(action (mut changeset.email))
+                             onblur=(action 'validateProperty' changeset 'email')}}
+        <div class="error-box">
+          {{changeset.error.email.validation}}
+        </div>
+      </div>
+    </div>
+    <div class="row form-row {{if changeset.error.mobile 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Mobile:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-phone-mask changeset.mobile name="mobile" id="mobile"
+                             update=(action (mut changeset.mobile))
+                             onblur=(action 'validateProperty' changeset 'mobile')}}
+        <div class="error-box">
+          {{changeset.error.mobile.validation}}
+        </div>
+      </div>
+    </div>
+    <div class="row form-row {{if changeset.error.callTimeout 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Call timeout:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-number-mask changeset.callTimeout decimal=false name="callTimeout" id="callTimeout"
+                              class="input-middle"
+                              update=(action (mut changeset.callTimeout))
+                              onblur=(action 'validateProperty' changeset 'maxBindings')}}
+        <div class="error-box">
+          {{changeset.error.callTimeout.validation}}
+        </div>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Call behavior:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{#rl-dropdown-container class="dropdown customer-select"}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            <em>{{showForwardBehavior}}</em> <span class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                         closeOnChildClick="a:link"}}
+            {{#each-in forward as |key value|}}
+              <li><a href="#" {{action "setForwardBehavior" key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+    <div class="row form-row {{if changeset.error.vmEmailNotification 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Email to send notifications:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-email-mask changeset.vmEmailNotification name="vmEmailNotification" id="vmEmailNotification"
+                             update=(action (mut changeset.vmEmailNotification))
+                             onblur=(action 'validateProperty' changeset 'vmEmailNotification')}}
+        <div class="error-box">
+          {{changeset.error.vmEmailNotification.validation}}
+        </div>
+      </div>
+
+    </div>
+    <div class="row form-row {{if changeset.error.vmEmailContent 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Email to send voice message:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-email-mask changeset.vmEmailContent name="vmEmailContent" id="vmEmailContent"
+                             update=(action (mut changeset.vmEmailContent))
+                             onblur=(action 'validateProperty' changeset 'vmEmailContent')}}
+        <div class="error-box">
+          {{changeset.error.vmEmailContent.validation}}
+        </div>
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Fax Extension:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <p>{{changeset.faxExt}}</p>
+      </div>
+    </div>
+
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label> Greeting: </label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{audio-player play=(route-action 'play') changeset=model startPlay=startPlay}}
+      </div>
+    </div>
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 hidden-xs"><label> &nbsp; </label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <div class="upload">
+          {{#file-upload name="greeting" accept="audio/mp3,audio/wav" multiple='false'
+                         onfileadd=(action 'setGreeting')}}
+            <span class="upload-btn">Upload new</span>
+          {{/file-upload}}
+          {{if changeset.greeting changeset.greeting.name}}
+        </div>
+      </div>
+    </div>
+    <div class="row form-row {{if changeset.error.oncallRemindMinutes 'error'}}">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind minutes:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{one-way-number-mask changeset.oncallRemindMinutes decimal=false name="oncallRemindMinutes"
+                              id="oncallRemindMinutes" class="input-middle"
+                              update=(action (mut changeset.oncallRemindMinutes))
+                              onblur=(action 'validateProperty' changeset 'oncallRemindMinutes')}}
+        <div class="error-box">
+          {{changeset.error.oncallRemindMinutes.validation}}
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label>Mobile stun:</label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        <label class="inbtn">
+          {{input type="checkbox" checked=changeset.enableMobileStun }}
+          <span class="inbtn__indicator"></span>
+        </label>
+      </div>
+    </div>
+     <div class="row form-row">
+       <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind email:</label></div>
+       <div class="col-md-7 col-sm-8 col-xs-12">
+         <label class="inbtn">
+           {{input type="checkbox" checked=changeset.oncallRemindEmail }}
+           <span class="inbtn__indicator"></span>
+         </label>
+       </div>
+     </div>
+    {{!--
+     <div class="row form-row">
+       <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind sms:</label></div>
+       <div class="col-md-7 col-sm-8 col-xs-12">
+         <label class="inbtn">
+           {{input type="checkbox" checked=changeset.oncallRemindSms }}
+           <span class="inbtn__indicator"></span>
+         </label>
+       </div>
+     </div> --}}
+
+    <div class="row form-row">
+      <div class="col-md-5 col-sm-4 col-xs-12"><label> QR Code: </label></div>
+      <div class="col-md-7 col-sm-8 col-xs-12">
+        {{qr-code data=qrcodeString light="#EEEEEE" dark="#330000" height='180' width='180'}}
+      </div>
+    </div>
+
+    <div class="form-footer text-right">
+      <button class="base-btn" type="submit" {{action 'saveButtonClick'}} >Save updates</button>
+      <a href="#" {{action 'rollback'}}>Cancel</a>
+    </div>
+  </div>
+</div>
+

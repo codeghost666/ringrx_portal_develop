@@ -1,0 +1,158 @@
+<div class="modal-body">
+  {{#if saveChanges.isIdle}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <div class="section-item">
+    <div class="row {{if showNameError 'error'}}">
+      <div class="col-md-6">
+        <p>Assign a namе to this rule:</p>
+        {{one-way-input-mask rule.name mask=nameMask name="name"
+                             update=(action (mut rule.name))}}
+        {{#if showStartError}}
+          <div class="error-box">
+            {{v-get rule 'name' 'message'}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="section-item">
+    <p>Select the week days this rule applies to:</p>
+    <ul class="ch-list">
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.daySun }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Sun
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.dayMon }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Mon
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.dayTue }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Tue
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.dayWed }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Wed
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.dayThu }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Thu
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.dayFri }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Fri
+        </label>
+      </li>
+      <li>
+        <label class="inbtn">
+          {{input type="checkbox" checked=rule.daySat }}
+          <span class="inbtn__indicator"></span>
+          &nbsp; Sat
+        </label>
+      </li>
+    </ul>
+  </div>
+  <div class="section-item {{if showStartError 'error'}}">
+    <p>Specify the start and end times for this rule:</p>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Start time:</label>
+        {{one-way-input-mask startTime mask=timeMask name="startTime"
+                             update=(action (mut startTime))
+                             onblur=(action (mut ShowStartValidation) true)}}
+        {{#if showStartError}}
+          <div class="error-box">
+            {{v-get rule 'startTime' 'message'}}
+          </div>
+        {{/if}}
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>End time:</label>
+        {{one-way-input-mask endTime mask=timeMask name="startTime"
+                             update=(action (mut endTime))
+                             onblur=(action (mut ShowStartValidation) true)}}
+        {{#if showStartError}}
+          <div class="error-box">
+            {{v-get rule 'startTime' 'message'}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="section-item">
+    <p>Select how you would like to be reached:</p>
+    <div class="row">
+      <div class="col-md-6">
+        {{#rl-dropdown-container
+          class=(if ShowForwardBehaviorError "dropdown customer-select error" "dropdown customer-select")}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            {{object-value rule.forwardBehavior forwardProperties}} <span
+            class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#if ShowForwardBehaviorError}}
+            <div class="error-box">
+              {{v-get rule 'forwardBehavior' 'message'}}
+            </div>
+          {{/if}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                         closeOnChildClick="a:link"}}
+            {{#each-in forwardProperties as |key value|}}
+              <li><a href="#" {{action "setProperty" 'forwardBehavior' key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+  </div>
+  <div class="section-item">
+    <p>Select how you would like the caller handled:</p>
+    <div class="row">
+      <div class="col-xs-6">
+        {{#rl-dropdown-container
+          class=(if ShowOncallBehaviorError "dropdown customer-select error" "dropdown customer-select")}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            {{object-value rule.oncallBehavior oncallProperties}} <span
+            class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#if ShowOncallBehaviorError}}
+            <div class="error-box">
+              {{v-get rule 'oncallBehavior' 'message'}}
+            </div>
+          {{/if}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                         closeOnChildClick="a:link"}}
+            {{#each-in oncallProperties as |key value|}}
+              <li><a href="#" {{action "setProperty" 'oncallBehavior' key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer form-footer">
+  <button class="base-btn" type="submit" onclick={{perform saveChanges}}>Save</button>
+  <a href="#"{{action 'rollback'}}>Cancel</a>
+</div>

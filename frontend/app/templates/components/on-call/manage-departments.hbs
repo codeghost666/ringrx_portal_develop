@@ -1,0 +1,48 @@
+<div class="container">
+  <span class="link back-link" {{action 'rollback'}}>Back to Calendar</span>
+  <div class="base-block calendar-options">
+    {{#if addDepartment.isIdle}}
+    {{else}}
+      {{ember-spinner config='standard'}}
+    {{/if}}
+    <div>
+      <div class="inner">
+        <div class="base-block-title">
+          Manage Departments <span class="link pull-right" onclick={{perform addDepartment}}>+ Add Department</span>
+        </div>
+        <table class="table">
+          <thead>
+          <th>Name</th>
+          <th>Retry Attempts</th>
+          <th>Minutes per retry</th>
+          <th class="action">Action</th>
+          </thead>
+          <tbody>
+          {{#each existsOncall as |oncall|}}
+            {{on-call/department-row department=oncall
+                                     mohProperties=mohProperties
+                                     mediafileProperties=mediafileProperties
+                                     mailboxProperties=mailboxProperties
+                                     phonenumberProperties=phonenumberProperties
+                                     saveOncall=(route-action 'saveOncall')
+                                     deleteOncall=(route-action 'deleteOncall')}}
+          {{/each}}
+          {{#if isHaveNew}}
+            {{on-call/department-row department=newOncall
+                                     mohProperties=mohProperties
+                                     mediafileProperties=mediafileProperties
+                                     mailboxProperties=mailboxProperties
+                                     phonenumberProperties=phonenumberProperties
+                                     saveOncall=(route-action 'saveOncall')
+                                     editShift=true}}
+          {{/if}}
+          </tbody>
+        </table>
+      </div>
+      <div class="form-footer clearfix  text-right">
+        <a href="#" {{action 'rollback'}}>Cancel</a>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>

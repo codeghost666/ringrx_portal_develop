@@ -1,0 +1,324 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if changeset.error.name 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.name mask=nameMask name="name" id="name"
+                                 update=(action (mut changeset.name))
+                                 onblur=(action 'validateProperty' changeset 'name')}}
+            <div class="error-box">
+              {{changeset.error.name.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.extension 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Extension:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.extension name="extension" id="extension"
+                                  update=(action (mut changeset.extension))
+                                  onblur=(action 'validateProperty' changeset 'extension')
+                                  disabled=true}}
+            <div class="error-box">
+              {{changeset.error.extension.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.username 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>User name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.username mask=usernameMask name="username" id="username"
+                                 update=(action (mut changeset.username))
+                                 onblur=(action 'validateProperty' changeset 'username')}}
+            <div class="error-box">
+              {{changeset.error.username.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.sipPassword 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>SIP Password:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.sipPassword name="sipPassword" id="sipPassword"
+                                 update=(action (mut changeset.sipPassword))
+                                 onblur=(action 'validateProperty' changeset 'sipPassword')}}
+            <div class="error-box">
+              {{changeset.error.sipPassword.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.maxBindings 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Max bindings:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask changeset.maxBindings decimal=false name="maxBindings" id="maxBindings"
+                                  update=(action (mut changeset.maxBindings))
+                                  onblur=(action 'validateProperty' changeset 'maxBindings')}}
+            <div class="error-box">
+              {{changeset.error.maxBindings.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.pin 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Pin:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.pin mask="9{4,9}" name="pin" id="pin" class="input-middle"
+                                 update=(action (mut changeset.pin))
+                                 onblur=(action 'validateProperty' changeset 'pin')}}
+            <div class="error-box">
+              {{changeset.error.pin.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.externalCalleridName 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>External Caller ID Name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.externalCalleridName mask=nameMask name="externalCalleridName"
+                                 id="externalCalleridName"
+                                 update=(action (mut changeset.externalCalleridName))
+                                 onblur=(action 'validateProperty' changeset 'externalCalleridName')}}
+            <div class="error-box">
+              {{changeset.error.externalCalleridName.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.externalCalleridNumber 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>External Caller ID Number:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-phone-mask changeset.externalCalleridNumber name="externalCalleridNumber"
+                                 id="externalCalleridNumber"
+                                 update=(action (mut changeset.externalCalleridNumber))
+                                 onblur=(action 'validateProperty' changeset 'externalCalleridNumber')
+            }}
+            <div class="error-box">
+              {{changeset.error.externalCalleridNumber.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.email 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Email:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.email name="email" id="email"
+                                 update=(action (mut changeset.email))
+                                 onblur=(action 'validateProperty' changeset 'email')}}
+            <div class="error-box">
+              {{changeset.error.email.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.mobile 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Mobile:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-phone-mask changeset.mobile name="mobile" id="mobile"
+                                 update=(action (mut changeset.mobile))
+                                 onblur=(action 'validateProperty' changeset 'mobile')}}
+            <div class="error-box">
+              {{changeset.error.mobile.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.callTimeout 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Call Timeouts:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask changeset.callTimeout decimal=false name="callTimeout" id="callTimeout"
+                                  update=(action (mut changeset.callTimeout))
+                                  onblur=(action 'validateProperty' changeset 'callTimeout')}}
+            <div class="error-box">
+              {{changeset.error.callTimeout.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Forward Behavior:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.forwardBehavior "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.forwardBehavior forwardProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.forwardBehavior.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in forwardProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'forwardBehavior' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Location:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.pbxLocationId "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.pbxLocationId locationProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.pbxLocationId.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in locationProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'pbxLocationId' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Mailbox:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.mailbox "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.mailbox mailboxProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.mailbox.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in mailboxProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'mailbox' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.vmEmailNotification 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Email to send notifications:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.vmEmailNotification name="vmEmailNotification" id="vmEmailNotification"
+                                 update=(action (mut changeset.vmEmailNotification))
+                                 onblur=(action 'validateProperty' changeset 'vmEmailNotification')}}
+            <div class="error-box">
+              {{changeset.error.vmEmailNotification.validation}}
+            </div>
+          </div>
+
+        </div>
+        <div class="row form-row {{if changeset.error.vmEmailContent 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Email to send voice message:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-email-mask changeset.vmEmailContent name="vmEmailContent" id="vmEmailContent"
+                                 update=(action (mut changeset.vmEmailContent))
+                                 onblur=(action 'validateProperty' changeset 'vmEmailContent')}}
+            <div class="error-box">
+              {{changeset.error.vmEmailContent.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Fax Extension:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.faxExt "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.faxExt faxExtensionProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.faxExt.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in faxExtensionProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'faxExt' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.oncallRemindMinutes 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind minutes:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask changeset.oncallRemindMinutes decimal=false name="oncallRemindMinutes"
+                                  id="oncallRemindMinutes" class="input-middle"
+                                  update=(action (mut changeset.oncallRemindMinutes))
+                                  onblur=(action 'validateProperty' changeset 'oncallRemindMinutes')}}
+            <div class="error-box">
+              {{changeset.error.oncallRemindMinutes.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Mobile stun:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.enableMobileStun }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind email:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.oncallRemindEmail }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind sms:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.oncallRemindSms }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Enable sms:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.smsEnable }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Role:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.role "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.role roleProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.role.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in roleProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'role' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

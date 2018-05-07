@@ -1,0 +1,106 @@
+<div class="call-settings">
+  <div class="section">
+    {{#if (not isCompletedProfile)}}
+      <div class="alert-block warning">
+        <strong>You have gaps in your profile</strong>
+        <p> Days that have gaps are marked with red border. Your profile should cover every minute of every day of typical 7 day week.</p>
+      </div>
+    {{/if}}
+    <div class="base-block dashboard">
+      <div class="base-block-title">One Week Rules</div>
+      <div class="week-schedule clearfix">
+        <div class="item-row">
+          {{#each-in trueWeekRules as |key dayRules|}}
+            {{my-phone/on-call-shot-day rules=dayRules haveGaps=(object-value key WeekGaps) dayIndex=key}}
+          {{/each-in}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">
+      How to contact me <i data-toggle="tooltip" data-placement="right" title="Tooltip on right"
+                           class="zmdi zmdi-help-outline tooltip"></i>
+      <span class="link modal-btn pull-right hidden-xs" {{action 'manageRule'}}>+ Add Rule</span>
+    </div>
+    <p>You contact profile is {{if isCompletedProfile 'complete' 'not complete'}}</p>
+    <div class="hidden-sm hidden-md hidden-lg"><span class="link">+ Add Rule</span><br> <br></div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Days</th>
+        <th>Time Period</th>
+        <th>Call Handling</th>
+        <th>Method</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      {{#sortable-objects sortableObjectList=rules tagName='tbody' sortEndAction='sortEndAction'
+                          enableSort=true}}
+        {{#each rules as |rule|}}
+          {{my-phone/rule-row rule=rule
+                              content=rule
+                              isSortable=true
+                              forwardProperties=forwardProperties
+                              oncallProperties=oncallProperties
+                              isSortingRules=isSorted
+                              deleteRule=(route-action 'deleteRule')
+                              manageRule='manageRule'}}
+        {{/each}}
+      {{/sortable-objects}}
+    </table>
+    <p class="gray-color user-info">Drag to set priority</p>
+    {{#if isSorted}}
+      <br><br>
+      <div class="form-footer clearfix text-right">
+        <button class="base-btn" type="submit" onclick={{perform saveNewPriorities}}>Save changes</button>
+        <a href="#" {{action 'rollback'}}>Cancel</a>
+        <br><br>
+      </div>
+    {{/if}}
+  </div>
+  {{!--<div class="section">
+    <div class="section-title">
+      Notify me when I'm scheduled
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 c0l-xs-6">
+        <label class="inbtn">Text message: &nbsp;
+          <input type="checkbox">
+          <span class="inbtn__indicator"></span>
+        </label>
+
+        <label class="inbtn">Email: &nbsp;
+          {{input type="checkbox" checked=changeset.oncallRemindEmail }}
+          <span class="inbtn__indicator"></span>
+        </label>
+      </div>
+    </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>On call remind sms:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.oncallRemindSms }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+  </div>--}}
+</div>
+
+{{#if isShowingModal}}
+  {{#ember-wormhole to='modal-dialog-wormhole'}}
+    {{#modal-dialog modalTitle='Edit Contact Profile Rule'
+                    rule=modalRule isShowingModal = isShowingModal as |isShowingModal|}}
+      {{my-phone/rule-form isShowingModal=isShowingModal
+                           rule=modalRule
+                           forwardProperties=forwardProperties
+                           oncallProperties=oncallProperties
+                           closeDialog='closeDialog'
+                           saveRule=(route-action 'saveRule')
+                           rollbackChanges=(route-action 'rollbackChanges')}}
+    {{/modal-dialog}}
+  {{/ember-wormhole}}
+{{/if}}
+

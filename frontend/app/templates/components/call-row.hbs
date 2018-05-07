@@ -1,0 +1,17 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Date</span> {{call-date call.startTime}}
+  <span class="collapse-arrow hidden-lg hidden-md hidden-sm"{{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span></td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Time</span>{{call-time call.startTime}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Calling #</span><span
+  >{{call-number-pretty-format call.callerIdNumber}}</span>
+</td>
+<td class="td-collapse"><span
+  class="mobile-title hidden-lg hidden-md hidden-sm">Caller Name</span>{{call.callerIdName}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Called #</span><span
+  >{{call-number-pretty-format call.calledParty}}</span></td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Bill Duration</span> {{call-bill-duration
+  call.billDuration}}</td>
+<td class="td-collapse"><span
+  class="mobile-title hidden-lg hidden-md hidden-sm">Hangup Cause</span> {{call-hangup-cause call.hangupCause}}
+</td>

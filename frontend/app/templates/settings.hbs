@@ -1,0 +1,43 @@
+<div class="main-content">
+  <div class="container">
+    <div class="base-block clearfix">
+      <div class="left-menu sameblock">
+        <ul>
+          {{#link-to 'settings.locations' tagName='li' href='false'}}
+            {{link-to 'Locations' 'settings.locations.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.phone-numbers' tagName='li' href='false'}}
+            {{link-to 'Phone Numbers' 'settings.phone-numbers.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.users' tagName='li' href='false'}}
+            {{link-to 'Users' 'settings.users.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.devices' tagName='li' href='false'}}
+            {{link-to 'Devices' 'settings.devices.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.mailboxes' tagName='li' href='false'}}
+            {{link-to 'Mailbox' 'settings.mailboxes.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.faxes' tagName='li' href='false'}}
+            {{link-to 'Faxes' 'settings.faxes.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.groups' tagName='li' href='false'}}
+            {{link-to 'Groups' 'settings.groups.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.parking-lots' tagName='li' href='false'}}
+            {{link-to 'Parking Lots' 'settings.parking-lots.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.media-files' tagName='li' href='false'}}
+            {{link-to 'Media Files' 'settings.media-files.index'}}
+          {{/link-to}}
+          {{#link-to 'settings.audit-logs' tagName='li' href='false'}}
+            {{link-to 'Audit logs' 'settings.audit-logs'}}
+          {{/link-to}}
+        </ul>
+      </div>
+      <div class="main-right-contant sameblock">
+        {{outlet}}
+      </div>
+    </div>
+  </div>
+</div>

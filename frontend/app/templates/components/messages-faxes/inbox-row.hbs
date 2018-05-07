@@ -1,0 +1,71 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">From #</span> <i class={{iconClass}} {{action 'showMessage'}}></i>
+  <span>{{call-number-pretty-format message.caller}}</span></td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Received</span>{{messages-faxes-data message.createdAt}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Type</span>{{capitalize-text
+  message.messageType}}</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span> <a {{action 'toTrash'}}class="action"
+                                                                              href="#">Trash </a>
+  {{#if isVoiceMail}}
+    {{#if downloadVoiceMail.isIdle}}
+    {{else}}
+      {{ember-spinner config='standard'}}
+    {{/if}}
+  <a class="action" onclick={{perform downloadVoiceMail}}>Download</a>
+  {{/if}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">History</span> <i
+  class="icon-history" {{action 'showHistory'}}></i></td>
+<td class="td-collapse">
+  <label class="switcher switcher-xs">
+    {{input type="checkbox" class="switcher__checkbox" checked=cbState disabled=statusSpinner}}
+    <span class="switcher__btn"></span>
+    <span class="label-text">Mark as Read</span>
+  </label>
+  {{#if statusSpinner}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+</td>
+{{#if isShowingHistory}}
+  {{#ember-wormhole to='modal-dialog-wormhole'}}
+    {{#modal-dialog modalTitle='History' isShowingModal = isShowingHistory as |isShowingModal|}}
+      <div class="modal-body">
+        {{#list-pagination items = message.history paginateBy = 10 as |paginatedItems page numberOfPages| }}
+          <thead>
+          <tr>
+            <td>Creator</td>
+            <td>Event</td>
+            <td>Created At</td>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each paginatedItems as |item|}}
+            {{messages-faxes/history-row item = item }}
+          {{/each}}
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="6">
+              <!-- Pagination -->
+              {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                                 aria-label="Page navigation"
+                                 class="navigation"}}
+            </td>
+          </tr>
+          </tfoot>
+        {{/list-pagination}}
+        {{#if isNoHistory}}
+          <p class="no-data-message">No Data</p>
+        {{/if}}
+      </div>
+    {{/modal-dialog}}
+  {{/ember-wormhole}}
+{{/if}}
+
+{{#if isShowingMessage}}
+  {{#ember-wormhole to='modal-dialog-wormhole'}}
+    {{#modal-dialog modalTitle='On Call Message' isShowingModal = isShowingMessage as |isShowingModal|}}
+      {{messages-faxes/voicemail-form message=message closeMessageDialog='closeMessageDialog' saveChanges=(route-action 'saveChanges')}}
+    {{/modal-dialog}}
+  {{/ember-wormhole}}
+{{/if}}

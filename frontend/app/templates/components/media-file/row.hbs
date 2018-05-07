@@ -1,0 +1,9 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Media File Name</span>
+  {{mediaFile.name}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm"></span>
+  {{audio-player-index play=(route-action 'playMediaFile') changeset=mediaFile divClass='no-bg'}} </td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.media-files.edit' mediaFile class='edit'}}<span class="link" onclick={{perform
+    deleteMediaFile}}> Remove</span>
+</td>

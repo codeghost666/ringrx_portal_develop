@@ -1,0 +1,5 @@
+{{resize-detector '.modal-box-inner' on-resize=(action 'resize')}}
+<div class="base-block modal-box-inner">
+  <div class="modal-title">{{modalTitle}} <a class="close-btn" {{action 'closeModal'}}><i class="ion-android-close"></i></a></div>
+  {{yield isShowingModal}}
+</div>

@@ -1,0 +1,17 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Fax name</span>
+  {{fax.name}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Extension #</span>
+  {{fax.extension}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Default format</span>
+  {{fax.defaultFormat}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Default caller ID</span>
+  <span class="link">{{number-pretty-format fax.defaultCallerid}}</span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.faxes.edit' fax class='edit'}}<span class="link" onclick={{perform
+    deleteFax}}> Remove</span>
+</td>

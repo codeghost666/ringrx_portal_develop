@@ -1,0 +1,122 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-9 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if showNameError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Group name:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask model.name mask=nameMask name="name" id="name"
+                                 update=(action (mut model.name))
+                                 onblur=(action (mut ShowNameValidation) true)}}
+            {{#if showNameError}}
+              <div class="error-box">
+                {{v-get model 'name' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row {{if ShowExtensionError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Extension:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask model.extension decimal=false name="extension" id="extension"
+                                  update=(action (mut model.extension))
+                                  onblur=(action (mut ShowExtensionValidation) true)}}
+            {{#if ShowExtensionError}}
+              <div class="error-box">
+                {{v-get model 'extension' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="row form-row {{if ShowCallTimeoutError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Call Timeout:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask model.callTimeout decimal=false name="callTimeout" id="callTimeout"
+                                  update=(action (mut model.callTimeout))
+                                  onblur=(action (mut ShowCallTimeoutValidation) true)}}
+            {{#if ShowCallTimeoutError}}
+              <div class="error-box">
+                {{v-get model 'callTimeout' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row {{if ShowCnamPrefixError 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>CNAM Prefix:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask model.cnamPrefix name="cnamPrefix" id="cnamPrefix"
+                                 update=(action (mut model.cnamPrefix))
+                                 onblur=(action (mut ShowCnamPrefixValidation) true)}}
+            {{#if ShowCnamPrefixError}}
+              <div class="error-box">
+                {{v-get model 'cnamPrefix' 'message'}}
+              </div>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Distinctive Ring:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if ShowDistinctiveRingError "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value model.distinctiveRing ringProperties}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#if ShowDistinctiveRingError}}
+                <div class="error-box">
+                  {{v-get model 'distinctiveRing' 'message'}}
+                </div>
+              {{/if}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in ringProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'distinctiveRing' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Sequential:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=model.sequential }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Users:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <span class="link" onclick={{perform AddGroupUser}}> AddGroupUser</span>
+          </div>
+        </div>
+        {{#each model.pbxGroupUsers as |user|}}
+          {{pbx-group-user/row user=user showValidations=showValidations pbxUserProperties=pbxUserProperties
+                               pbxUserOptions=pbxUserOptions pbxPriorityProperties=pbxPriorityProperties
+                               deleteRecord=(route-action 'deleteGroupUser')}}
+        {{/each}}
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

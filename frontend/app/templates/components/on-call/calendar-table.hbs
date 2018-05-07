@@ -1,0 +1,21 @@
+<thead>
+<th>Sun</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+<th>Sat</th>
+</thead>
+<tbody>
+{{#each monthTable as |shiftRow|}}
+  <tr>
+    {{#each-in shiftRow as |key dayShifts|}}
+      {{on-call/calendar-day shifts=dayShifts.firstObject SortedShifts=dayShifts.lastObject elementId=key userProperties=userProperties isCopyMode=isCopyMode
+                             copyShiftToCurrentDay=(route-action 'copyShift')
+                             showEditTable=(action 'showEditDialog')}}
+    {{/each-in}}
+  </tr>
+{{/each}}
+
+</tbody>

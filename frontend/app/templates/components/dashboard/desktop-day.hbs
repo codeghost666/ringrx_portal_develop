@@ -1,0 +1,10 @@
+  <div class="item-coll-title">{{weekday}}<span class="date">{{dayName}}</span></div>
+  {{#if noShifts}}
+    <div class="coll-row">
+      <span class="text">No one scheduled</span>
+    </div>
+  {{else}}
+    {{#each SortedShifts as |shift index|}}
+      {{dashboard/shift-row shift=shift index=index cellDay=currentDay}}
+    {{/each}}
+  {{/if}}

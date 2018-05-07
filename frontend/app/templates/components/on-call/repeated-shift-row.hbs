@@ -1,0 +1,139 @@
+{{#if isEdited}}
+  <td colspan="4">
+    <div>
+      <div class="col-md-6 col-sm-6 {{if showStartError 'error'}}">
+        <span class="gray-color"> Strat Time</span>
+        {{one-way-input-mask startTime mask=timeMask name="startTime"
+                             update=(action (mut startTime))
+                             onblur=(action (mut ShowStartValidation) true)}}
+        {{#if showStartError}}
+          <div class="error-box">
+            {{v-get shift 'startTime' 'message'}}
+          </div>
+        {{/if}}
+      </div>
+      <div class="col-md-6 col-sm-6 {{if showStartError 'error'}}">
+        <span class="gray-color"> End Time</span>
+        {{one-way-input-mask endTime mask=timeMask name="endTime"
+                             update=(action (mut endTime))
+                             onblur=(action (mut ShowEndValidation) true)}}
+        {{#if showStartError}}
+          <div class="error-box">
+            {{v-get shift 'startTime' 'message'}}
+          </div>
+        {{/if}}
+      </div>
+      <div class="col-md-12"><span class="gray-color">Repeat on</span></div>
+      <div class="col-md-12 {{if showMarkError 'error'}}">
+        <ul class="ch-list">
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.daySun }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Sun
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.dayMon }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Mon
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.dayTue }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Tue
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.dayWed }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Wed
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.dayThu }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Thu
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.dayFri }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Fri
+            </label>
+          </li>
+          <li>
+            <label class="inbtn">
+              {{input type="checkbox" checked=shift.daySat }}
+              <span class="inbtn__indicator"></span>
+              &nbsp; Sat
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12"><span class="gray-color">Name</span></div>
+      {{#sortable-objects sortableObjectList=shiftUsers
+                          classNames='col-md-12 sortable-select'
+                          sortEndAction='usersSortEndAction'
+                          enableSort=isEdited}}
+        {{#each shiftUsers as |user|}}
+          {{#draggable-object content=user overrideClass='sortable-objects' isSortable=isEdited}}
+            {{#rl-dropdown-container
+              class=(if showValidations (if user.pbxUserId " col-md-11 col-sm-11 col-xs-10 dropdown customer-select" "col-md-11 col-sm-11 col-xs-10 dropdown customer-select error") "col-md-11 col-sm-11 col-xs-10 dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value user.pbxUserId userProperties}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each userPropertiesList as |userPropertie|}}
+                  <li><a href="#" {{action "setProperty" 'pbxUserId' user
+                                           userPropertie.key}}>{{userPropertie.value}}</a>
+                  </li>
+                {{/each}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+            <div class="col-md-1 col-sm-1 col-xs-2"><i class="zmdi zmdi-delete pull-right" onclick={{perform
+              deleteUser user}}></i>
+            </div>
+          {{/draggable-object}}
+        {{/each}}
+      {{/sortable-objects}}
+      <p class="gray-color user-info">Drag to set priority</p>
+      <div class="col-md-12 last">
+        <div class="col-md-9">
+          <span class="link" onclick={{perform addUser}}>Add User +</span>
+        </div>
+        <div class="col-md-3">
+          <span class="link" onclick={{perform deleteShift}}>Delete shift</span>
+        </div>
+      </div>
+    </div>
+  </td>
+{{else}}
+  <td>
+    {{#each sortedUsers as |value|}}
+      <div>{{value.index}} {{value.name}}</div>
+    {{/each}}
+  </td>
+  <td>{{startTime}}</td>
+  <td>{{endTime}}
+    {{#if isTwoDays}}
+      <span> *</span>
+    {{/if}}
+  </td>
+  {{#if notShowActions}}
+  {{else}}
+  <td class="action">
+      <i class="zmdi zmdi-edit" {{action 'editShift'}}></i> <i class="zmdi zmdi-delete" onclick={{perform
+        deleteShift}}></i>
+  </td>
+  {{/if}}
+{{/if}}

@@ -1,0 +1,100 @@
+<div class="container">
+  {{#if (and saveNewPriorities.isIdle saveChanges.isIdle)}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <span class="link back-link" {{action 'rollback'}}>Back to Calendar</span>
+  <div class="base-block calendar-options">
+    <div>
+      <div class="inner">
+        <div class="base-block-title">
+          {{shift-form-title-date currentDate}}
+        </div>
+        {{#if isNotEmptyRepeated}}
+          <div class="caption"><span class="text">Repeated Shifts</span> <span class="decor-line"></span></div>
+          <table class="table repeated-shefts">
+            <thead>
+            <th>Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            </thead>
+            <tbody>
+            {{#each repeatedShifts as |shift|}}
+              {{on-call/repeated-shift-row shift=shift userProperties=userProperties notShowActions=true
+                                           isDraggable=false}}
+              <tr class="space">
+                <td colspan="3"></td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+          <br>
+        {{/if}}
+        <div class="caption"><span class="text">Single Shifts</span> <span class="decor-line"></span></div>
+        <table class="table">
+          <thead>
+          <th>Name</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th class="action">Action</th>
+          </thead>
+          {{#sortable-objects sortableObjectList=oneTimeShifts tagName='tbody' sortEndAction='sortEndAction'
+                              enableSort=enableSort}}
+            {{#each oneTimeShifts as |shift|}}
+              {{on-call/one-time-shift-row shift=shift userProperties=userProperties
+                                           content=shift isSortable=enableSort
+                                           toggleShowButton='toggleShowButton'
+                                           copyMode='openCopyMode'
+                                           toggleShowButton=toggleShowButton
+                                           showValidations=showValidations
+                                           deleteShiftRecord=deleteShiftRecord
+                                           resetEditState=resetEditState
+                                           isDraggable=enableSort
+                                           isSortMode=showSortSaveButton
+                                           addUserToShift=(route-action 'addUserToShift')
+                                           moveUserOnTop=(route-action 'moveUserOnTop')
+                                           deleteUserFromShift=(route-action 'deleteUserFromShift')
+              }}
+            {{/each}}
+          {{/sortable-objects}}
+          <tbody>
+          {{#each newShifts as |shift|}}
+            {{on-call/one-time-shift-row shift=shift isEdited=true userProperties=userProperties
+                                         isDraggable=false
+                                         showValidations=showValidations
+                                         deleteShiftRecord=deleteShiftRecord
+                                         isSortMode=showSortSaveButton
+                                         addUserToShift=(route-action 'addUserToShift')
+                                         moveUserOnTop=(route-action 'moveUserOnTop')
+                                         deleteUserFromShift=(route-action 'deleteUserFromShift')
+            }}
+          {{/each}}
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-md-7 col-sm-7 col-xs-7">
+            {{#if enableSort}}
+              <p class="gray-color">Drag to set priority</p>
+            {{/if}}
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <p class="gray-color pull-right">* indicates shift ends the following day</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-footer clearfix text-right">
+        <span class="link pull-left" onclick={{perform addNewShift}}>Add Shift +</span>
+        <div>
+          <a href="#" {{action 'rollback'}}>Cancel</a>
+          {{#if showSaveButton}}
+            <button class="base-btn" type="submit" onclick={{perform saveChanges}}>Save</button>
+          {{/if }}
+          {{#if showSortSaveButton}}
+            <button class="base-btn" type="submit" onclick={{perform saveNewPriorities}}>Save</button>
+          {{/if}}
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>

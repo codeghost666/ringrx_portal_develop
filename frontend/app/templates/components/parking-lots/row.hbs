@@ -1,0 +1,17 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Extension #</span>
+  {{parkingLot.extension}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Music on Hold</span>
+  {{parkingLot.moh}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Time to stay in Lot</span>
+  {{parkingLot.timeout}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Timeout Extension</span>
+  {{parkingLot.timeoutExtension}}
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.parking-lots.edit' parkingLot class='edit'}}<span class="link" onclick={{perform
+    deleteParkingLot}}> Remove</span>
+</td>

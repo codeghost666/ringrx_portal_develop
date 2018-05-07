@@ -1,0 +1,115 @@
+{{#if statusSpinner}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title"> Edit Phone Number </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Phone number:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <p>{{call-number-pretty-format changeset.phonenumber}}</p>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Distinctive Ring:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container class="dropdown customer-select"}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+              <em>{{object-value changeset.distinctiveRing distinctiveRingProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.distinctiveRing.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in distinctiveRingProperties as |key value|}}
+                  <li><a href="#" {{action "setDistinctiveRing" key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.cnamPrefix 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>CNAM Prefix:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-input-mask changeset.cnamPrefix name="cnamPrefix" id="cnamPrefix"
+                                 update=(action (mut changeset.cnamPrefix))
+                                 onblur=(action 'validateProperty' changeset 'cnamPrefix')}}
+            <div class="error-box">
+              {{changeset.error.cnamPrefix.validation}}
+            </div>
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Extension:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container class="dropdown customer-select"}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.extension extensionProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu2"
+                             closeOnChildClick="a:link"}}
+                {{#each-in extensionProperties as |key value|}}
+                  <li><a href="#" {{action "setExtensionPropertie" key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>PBX Location:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container class="dropdown customer-select"}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" id="dropdownMenu3" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+                <em>{{object-value changeset.pbxLocationId PbxLocationProperties}}</em> <span class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu3"
+                             closeOnChildClick="a:link"}}
+                {{#each-in PbxLocationProperties as |key value|}}
+                  <li><a href="#" {{action "setPbxLocationId" key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+        <div class="row form-row {{if changeset.error.forwardDestination 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Forward Destination:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-phone-mask changeset.forwardDestination name="forwardDestination" id="forwardDestination"
+                                 update=(action (mut changeset.forwardDestination))
+                                 onblur=(action 'validateProperty' changeset 'forwardDestination')
+                                 disabled=(if changeset.forward false true)}}
+            <div class="error-box">
+              {{changeset.error.forwardDestination.validation}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Forward:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            <label class="inbtn">
+              {{input type="checkbox" checked=changeset.forward }}
+              <span class="inbtn__indicator"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" {{action 'saveButtonClick'}} >Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

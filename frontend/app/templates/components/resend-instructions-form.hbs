@@ -1,0 +1,39 @@
+<div class="container">
+  {{#if sendInstruction.isIdle}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="login-block">
+        <div class="base-form">
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="logo" href="#"><img src="/img/logo_mobile.png" alt="RingRx"></a>
+            </div>
+          </div>
+          <div class="title">Resend Confirmation Instructions</div>
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="email">Login:</label>
+              {{one-way-email-mask email name="email" id="email" placeholder='Enter Login'
+                                   update=(action (mut email))}}
+              <i class="zmdi zmdi-account"></i>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <button class="base-btn btn-light-blue" onclick={{perform sendInstruction}}>Resend Confirmation
+                Instructions
+              </button>
+              <p>Have an account already?{{link-to 'Sign In' 'login'}}</p>
+              <p>No account? <a href="https://ringrx.com/free-trial">Sign Up</a></p>
+              <p>Did you {{link-to 'forget your password?' 'remind-password'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

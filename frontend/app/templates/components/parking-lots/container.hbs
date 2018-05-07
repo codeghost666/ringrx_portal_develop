@@ -1,0 +1,65 @@
+{{#filter-content content=model properties="extension moh timeout timeoutExtension" as |filteredIngredients query|}}
+  <div class="tools-bar">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="page-title"> List of Parking Lots</div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 push-t30">
+      <div class="row">
+        <div class="col-md-5 col-sm-5">
+          <div class="search-form">
+            <div class="form-group">
+              {{ input value=query class="search" type="search" placeholder="Search"}}
+              <button class="search-btn"><i class="ion-ios-search"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          {{link-to '+ Add New Parking Lot' 'settings.parking-lots.new' class="base-btn btn-light"}}
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <div class="search-form">
+            <div class="form-group">
+              {{#rl-dropdown-container class="dropdown customer-select"}}
+                {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle"  data-toggle="dropdown"
+                                      aria-haspopup="true" aria-expanded="true"}}
+                  {{paginateBy}} <span class="caret"></span>
+                {{/rl-dropdown-toggle}}
+                {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick="a:link"}}
+                  {{#each-in paginationProperty as |key value|}}
+                    <li><a href="#" {{action "setProperty" 'paginateBy' key}}>{{value}}</a></li>
+                  {{/each-in}}
+                {{/rl-dropdown}}
+              {{/rl-dropdown-container}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#list-pagination items = filteredIngredients paginateBy = paginateBy as |paginatedItems page numberOfPages| }}
+    <thead>
+    <tr>
+      <td>Extension #</td>
+      <td>Music on Hold</td>
+      <td>Time to stay in Lot</td>
+      <td>Timeout Extension</td>
+      <td>Action</td>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each paginatedItems as |item|}}
+      {{parking-lots/row parkingLot = item deleteRecord=(route-action 'deleteParkingLot')}}
+    {{/each}}
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6">
+        <!-- Pagination -->
+        {{pagination-pager current=page count= numberOfPages countOut=1 countIn=1
+                           aria-label="Page navigation"
+                           class="navigation"}}
+      </td>
+    </tr>
+    </tfoot>
+  {{/list-pagination}}
+{{/filter-content}}

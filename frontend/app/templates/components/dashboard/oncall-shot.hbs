@@ -1,0 +1,33 @@
+<div class="base-block dashboard">
+  <div class="base-block-title">
+    <div class="row">
+      <div class="col-lg-9 col-md-9 col-sm-7 col-xs-12">
+        One Week On-Call Shot
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+        {{#rl-dropdown-container
+          class="dropdown customer-select"}}
+          {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true"}}
+            <em>{{oncall.name}}</em> <span
+            class="caret"></span>
+          {{/rl-dropdown-toggle}}
+          {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                         closeOnChildClick="a:link"}}
+            {{#each-in oncallProperties as |key value|}}
+              <li><a href="#" {{action "setProperty" 'oncallId' key}}>{{value}}</a></li>
+            {{/each-in}}
+          {{/rl-dropdown}}
+        {{/rl-dropdown-container}}
+      </div>
+    </div>
+    <div class="week-schedule clearfix">
+      <div class="item-row">
+        {{#each-in oncallWeek as |key dayShifts|}}
+          {{dashboard/desktop-day shifts=dayShifts currentDay=key userProperties=userProperties}}
+        {{/each-in}}
+      </div>
+    </div>
+  </div>
+</div>
+

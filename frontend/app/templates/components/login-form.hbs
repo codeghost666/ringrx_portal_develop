@@ -1,0 +1,53 @@
+<div class="container">
+  {{#if authenticate.isIdle}}
+  {{else}}
+    {{ember-spinner config='standard'}}
+  {{/if}}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="login-block">
+        <form class="base-form" {{action (perform authenticate) on='submit'}}>
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="logo" href="#"><img src="/img/logo_mobile.png" alt="RingRx"></a>
+            </div>
+          </div>
+          <!--div  class="title">Sign In</div-->
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="email">Email Address:</label>
+              {{input id='identification' placeholder='Enter Login' value=identification}}
+              <i class="zmdi zmdi-account"></i>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <label for="password">Password:</label>
+              {{input id='password' placeholder='Enter Password' type='password' value=password}}
+            </div>
+          </div>
+          <br>
+          {{!-- <div class="row">
+            <div class="col-xs-12">
+              <label class="inbtn">
+                {{input type="checkbox" checked=rememberMe }}
+                <span class="inbtn__indicator"></span>
+                &nbsp; Remember me
+              </label>
+            </div>
+          </div>
+          <br> --}}
+          <div class="row">
+            <div class="col-md-12">
+              <button class="base-btn btn-light-blue">Sign In</button>
+              {{!-- <p>No account? <a href="https://ringrx.com/free-trial">Sign Up</a></p> --}}
+              <p>Did you {{link-to 'forget your password?' 'remind-password'}}</p>
+              {{!-- <p>Didn’t receive confirmation instructions? {{link-to 'Resend' 'resend-instructions'}}</p> --}}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

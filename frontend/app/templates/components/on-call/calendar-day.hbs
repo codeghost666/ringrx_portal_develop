@@ -1,0 +1,16 @@
+{{#if copyShift.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<span class="date"><span class="month">{{month}}</span> <span class="num">{{currentDay}}</span> <span
+  class="prefix"></span> </span>
+{{#if noShifts}}
+  <div class="add-block">
+    <i class="zmdi zmdi-plus-circle-o"></i>
+    <span class="text">No one scheduled</span>
+  </div>
+{{else}}
+  {{#each SortedShifts as |shift index|}}
+    {{on-call/shift-row shift=shift index=index cellDay=elementId}}
+  {{/each}}
+{{/if}}

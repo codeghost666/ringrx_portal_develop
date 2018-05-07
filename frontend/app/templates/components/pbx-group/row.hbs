@@ -1,0 +1,20 @@
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Group name</span>
+  {{group.name}}<span
+    class="collapse-arrow hidden-lg hidden-md hidden-sm" {{ action 'collapsArrow'}}><i
+    class="ion-ios-arrow-down"></i></span>
+</td>
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Extension #</span>
+  {{group.extension}} </td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Distinctive Ring</span>
+  {{group.distinctiveRing}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Sequential</span>
+  {{if group.sequential 'Yes' 'No'}}
+</td>
+<td class="td-collapse"><span class="mobile-title hidden-lg hidden-md hidden-sm">Users</span>
+{{property-pretty-format (show-group-users group.pbxGroupUsers pbxUserProperties) 15}}
+</td>
+
+<td><span class="mobile-title hidden-lg hidden-md hidden-sm">Action</span>
+  {{link-to 'Edit |' 'settings.groups.edit' group class='edit'}}<span class="link" onclick={{perform deleteGroup}}> Remove</span>
+</td>

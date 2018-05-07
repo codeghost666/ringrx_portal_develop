@@ -1,0 +1,92 @@
+{{#if saveButtonClick.isIdle}}
+{{else}}
+  {{ember-spinner config='standard'}}
+{{/if}}
+<div class="tools-bar">
+  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="page-title">{{title}}</div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-8 col-sm-12 col-xs-12">
+  <div class="block-my-phone">
+    <div class="base-form">
+      <div class="inner">
+        <div class="row form-row {{if changeset.error.extension 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>extension:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask changeset.extension decimal=false name="extension" id="extension"
+                                 update=(action (mut changeset.extension))
+                                 onblur=(action 'validateProperty' changeset 'extension')}}
+            <div class="error-box">
+              {{changeset.error.extension.validation}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Music on Hold:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.moh "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+              <em>{{object-value changeset.moh mohProperties}}</em><span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.moh.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in mohProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'moh' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+        <div class="row form-row {{if changeset.error.timeout 'error'}}">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Time to stay in Lot:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{one-way-number-mask changeset.timeout decimal=false name="timeout" id="timeout"
+                                  update=(action (mut changeset.timeout))
+                                  onblur=(action 'validateProperty' changeset 'timeout')}}
+            <div class="error-box">
+              {{changeset.error.timeout.validation}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-row">
+          <div class="col-md-5 col-sm-4 col-xs-12"><label>Extension after timeout:</label></div>
+          <div class="col-md-7 col-sm-8 col-xs-12">
+            {{#rl-dropdown-container
+              class=(if changeset.error.timeoutExtension "dropdown customer-select error" "dropdown customer-select")}}
+              {{#rl-dropdown-toggle class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true"}}
+              <em>{{object-value changeset.timeoutExtension timeoutExtensionProperties}}</em> <span
+                class="caret"></span>
+              {{/rl-dropdown-toggle}}
+              <div class="error-box">
+                {{changeset.error.timeoutExtension.validation}}
+              </div>
+              {{#rl-dropdown tagName="ul" class="dropdown-menu" aria-labelledby="dropdownMenu1"
+                             closeOnChildClick="a:link"}}
+                {{#each-in timeoutExtensionProperties as |key value|}}
+                  <li><a href="#" {{action "setPropertie" 'timeoutExtension' key}}>{{value}}</a></li>
+                {{/each-in}}
+              {{/rl-dropdown}}
+            {{/rl-dropdown-container}}
+          </div>
+        </div>
+
+
+        <div class="form-footer">
+          <button class="base-btn" type="submit" onclick={{perform saveButtonClick}}>Save</button><a href="#" {{action 'rollback'}}>Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
